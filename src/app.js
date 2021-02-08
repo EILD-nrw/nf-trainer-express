@@ -3,6 +3,8 @@ const { Client } = require('pg')
 
 const app = express()
 
+// Example Client settings (should probably be moved into an external file / environment variables)
+// Use Pools instead of clients later
 const client = new Client({
     user: 'postgres',
     host: 'db',
@@ -11,6 +13,7 @@ const client = new Client({
     port: 5432,
 })
 
+// Get using asynchronous function to avoid callbacks
 app.get('/', async (req, res) => {
     await client.connect()
     let { rows } = await client.query('SELECT NOW()')
