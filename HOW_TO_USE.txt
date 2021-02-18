@@ -1,0 +1,14 @@
+This is a short step-by-step guide how to use this application
+
+1. Open a console in the project folder
+--OPTIONAL 1.1 Type in: docker build --no-cache
+	-> If you made some changes but after doing step 2. you still can't see your changes use the upper command
+2. Type in: docker-compose up
+	-> This will download all the nessesary ressources you need to use this application
+3. You can access the following URLs:
+	-> localhost:8080/insert (This fills the database with the file data.txt in textfiles folder)
+	-> localhost:8080/drop (This drops all tables that are defined in the file drop.txt in textfiles folder)
+	-> localhost:8080/check (To see all your created tables)
+	-> localhost:8080/get/:tablename (To see the data in a specific table name e.g. localhost:8080/get/aufgabe1)
+
+Hint: You cant create a table that already exists, same as you cant drop a table that already exists. Keep this in mind if you get an error. This might be it! 
