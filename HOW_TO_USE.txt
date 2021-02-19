@@ -9,6 +9,6 @@ This is a short step-by-step guide how to use this application
 	-> localhost:8080/insert (This fills the database with the file data.txt in textfiles folder)
 	-> localhost:8080/drop (This drops all tables that are defined in the file drop.txt in textfiles folder)
 	-> localhost:8080/check (To see all your created tables)
-	-> localhost:8080/get/:tablename (To see the data in a specific table name e.g. localhost:8080/get/aufgabe1)
+	-> localhost:8080/get/:tablename (To see the data in a specific table e.g. localhost:8080/get/aufgabe1)
 
-Hint: You cant create a table that already exists, same as you cant drop a table that already exists. Keep this in mind if you get an error. This might be it! 
+Hint: You cant create a table that already exists, same as you cant drop a table thats not existing. Keep this in mind if you get an error. This might be it! 
