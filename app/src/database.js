@@ -10,6 +10,16 @@ const pool = new Pool({
 })
 
 let client =  await pool.connect()
-let { rows } = await client.query('SELECT NOW()')
-res.send(rows[0])
-client.release()
+
+async function getTime() {
+    let { rows } = await client.query('SELECT NOW()')
+    client.release()
+    return rows[0]
+}
+
+export { getTime }
+
+
+
+
+
