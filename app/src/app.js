@@ -1,16 +1,11 @@
-const express = require('express')
-const { Pool } = require('pg')
+const express = require('express'),
+    app = express()
+
+let path = __dirname + '/views/'
 
 const app = express()
 
-// Basic Pool Connection
-const pool = new Pool({
-    user: 'postgres',
-    host: 'db',
-    database: 'nf_trainer',
-    password: 'postgres',
-    port: 5432,
-})
+app.use(express.static(__dirname))
 
 // Get using asynchronous function to avoid callbacks
 app.get('/', async (req, res) => {
