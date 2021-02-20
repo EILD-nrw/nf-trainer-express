@@ -15,6 +15,14 @@ app.get('/', async (req, res) => {
     client.release()
 })
 
+
+// Start server
 app.listen(8080, () => {
-    console.log('Server listening at http:/localhost:8080')
+    console.log(`Server listening at http://localhost:8080/`)
+})
+
+// Handle Shutdown
+process.on('SIGINT', () => {
+    console.log('Exiting application')
+    process.exit(0)
 })
