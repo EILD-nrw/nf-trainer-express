@@ -3,16 +3,17 @@ const express = require('express'),
 
 let path = __dirname + '/views/'
 
-const app = express()
+// Use pug
+app.set('view engine', 'pug')
 
 app.use(express.static(__dirname))
 
-// Get using asynchronous function to avoid callbacks
-app.get('/', async (req, res) => {
-    let client =  await pool.connect()
-    let { rows } = await client.query('SELECT NOW()')
-    res.send(rows[0])
-    client.release()
+app.get('/', (req, res) => {
+    // Variables for pug rendering
+    let variables = {title: 'NF-Trainer', active_apps: true}
+
+    // Render pug file at /views/3nf
+    res.render(path + '3nf', variables)
 })
 
 
