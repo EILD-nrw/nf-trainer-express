@@ -12,11 +12,11 @@ services:
       - 5432:5432
 
   nf_trainer:
-    build: .
+    build: ./app
     depends_on:
       - db
     volumes:
-      - ./src:/app
+      - ./app/src:/app
       - /app/node_modules
     ports:
       - 8080:8080
