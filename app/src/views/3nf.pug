@@ -1,46 +1,40 @@
-extends ../../../views/layout
-
+extends layout
 
 block content
     div(class="main-wrapper" role="main")
 
-        include ../../../views/errors.pug
-        include ../../../views/success.pug
+        include errors.pug
+        include success.pug
 
         div(class="container main-content-container")
-            if !user
-                //login view
-                include ../../../bin/auth/views/login
+            div.jumbotron
+                center
+                  h1 3NF-Trainer
+                br
+                p In sechs Schritten zur dritten Normalform: Eine weitere Schwierigkeit bei der Datenmodellierung ist die #[a( href='http://wikis.gm.fh-koeln.de/wiki_db/Category/Normalformen' ) Normalisierung] eines Relationenschemas. Der 3NF-Trainer demonstriert in einem stufenweisen Verfahren, wie die Normalisierung von Relationen interaktiv bis zur 3. Normalform (3NF) bewältigt werden kann. Dabei wird der Gesamtalgorithmus in Einzelschritte zerlegt und nach jedem Schritt die korrekte Lösung mit einem Zwischenergebnis angezeigt sowie die Bewertung der eigenen Lösung mit Punkten versehen.
+                p Eine kurze Beschreibung der wichtigsten Begriffe und Definitionen (funktionale Abhängigkeit, 1NF, 2NF, 3NF) finden Sie hier. (#[a( href='http://edb.gm.fh-koeln.de/nf/normalformen.pdf' ) Link zum PDF-Dokument])
+                p Die einzelnen sechs Schritte sehen wie folgt aus:
+                br
+                p Zuerst wird Ihnen aus einer Menge von NF-Aufgaben eine zufällige Aufgabenbeschreibung mit der zugehörigen Ausgangstabelle angezeigt.
+                ul
+                    li In Schritt 1 gilt es zu entscheiden (Ja/Nein-Auswahl), ob sich die Tabelle schon in der ersten Normalform befindet. Falls nicht, müssen schließlich die Spalten in das Drag&Drop-Feld gezogen, welche die erste Normalform verletzen. Die Tabelle wird anschließend vom System in die 1NF überführt.
+                    li In Schritt 2 bestimmen Sie alle funktionalen Abhängigkeiten. Dazu können Sie ebenfalls die Spalten in ein dazugehöriges Drag&Drop-Feld ziehen (Primärschlüssel -> Spalte)
+                    li In Schritt 3 wählen Sie bitte per Drag&Drop diejenigen Spalten aus, aus denen der Primärschlüssel besteht.
+                    li In Schritt 4 bestimmen Sie schließlich anhand der Primärschlüssel die Typen der funktionalen Abhängigkeiten.
+                    li In Schritt 5 überführen Sie die 1NF-Tabelle in eine 2NF-Tabelle. Hierzu können wie in den vorherigen Schritten die Spalten der Tabelle in ein Drag&Drop-Feld gezogen werden
+                    li In Schritt 6 überführen Sie die 2NF-Tabellen in 3NF-Tabellen. Dieser Schritt besteht wie Schritt 5 aus Drag&Drop-Felder, in denen Sie die Spalten ziehen können.
 
-            else
-                div.jumbotron
-                    center
-                      h1 3NF-Trainer
-                    br
-                    p In sechs Schritten zur dritten Normalform: Eine weitere Schwierigkeit bei der Datenmodellierung ist die #[a( href='http://wikis.gm.fh-koeln.de/wiki_db/Category/Normalformen' ) Normalisierung] eines Relationenschemas. Der 3NF-Trainer demonstriert in einem stufenweisen Verfahren, wie die Normalisierung von Relationen interaktiv bis zur 3. Normalform (3NF) bewältigt werden kann. Dabei wird der Gesamtalgorithmus in Einzelschritte zerlegt und nach jedem Schritt die korrekte Lösung mit einem Zwischenergebnis angezeigt sowie die Bewertung der eigenen Lösung mit Punkten versehen.
-                    p Eine kurze Beschreibung der wichtigsten Begriffe und Definitionen (funktionale Abhängigkeit, 1NF, 2NF, 3NF) finden Sie hier. (#[a( href='http://edb.gm.fh-koeln.de/nf/normalformen.pdf' ) Link zum PDF-Dokument])
-                    p Die einzelnen sechs Schritte sehen wie folgt aus:
-                    br
-                    p Zuerst wird Ihnen aus einer Menge von NF-Aufgaben eine zufällige Aufgabenbeschreibung mit der zugehörigen Ausgangstabelle angezeigt.
-                    ul
-                        li In Schritt 1 gilt es zu entscheiden (Ja/Nein-Auswahl), ob sich die Tabelle schon in der ersten Normalform befindet. Falls nicht, müssen schließlich die Spalten in das Drag&Drop-Feld gezogen, welche die erste Normalform verletzen. Die Tabelle wird anschließend vom System in die 1NF überführt.
-                        li In Schritt 2 bestimmen Sie alle funktionalen Abhängigkeiten. Dazu können Sie ebenfalls die Spalten in ein dazugehöriges Drag&Drop-Feld ziehen (Primärschlüssel -> Spalte)
-                        li In Schritt 3 wählen Sie bitte per Drag&Drop diejenigen Spalten aus, aus denen der Primärschlüssel besteht.
-                        li In Schritt 4 bestimmen Sie schließlich anhand der Primärschlüssel die Typen der funktionalen Abhängigkeiten.
-                        li In Schritt 5 überführen Sie die 1NF-Tabelle in eine 2NF-Tabelle. Hierzu können wie in den vorherigen Schritten die Spalten der Tabelle in ein Drag&Drop-Feld gezogen werden
-                        li In Schritt 6 überführen Sie die 2NF-Tabellen in 3NF-Tabellen. Dieser Schritt besteht wie Schritt 5 aus Drag&Drop-Felder, in denen Sie die Spalten ziehen können.
-                    
-                    br
-                    center
-                      form(
-                      class=''
-                      method='post'
-                      action='/apps/3nf/checkFirstNfTask'
-                      )
+                br
+                center
+                  form(
+                  class=''
+                  method='post'
+                  action='/apps/3nf/checkFirstNfTask'
+                  )
 
-                        input(type='hidden' name='step' value='checkFirstNfTask')
-                        button(type='submit', class='btn btn-primary btn-lg') Test starten
+                    input(type='hidden' name='step' value='checkFirstNfTask')
+                    button(type='submit', class='btn btn-primary btn-lg') Test starten
 
-                    br
-                    hr(class='my-4')
-                    p Hinweis: Fehler sollten ja eigentlich nicht vorkommen. Sind jedoch welche drin, benutzen Sie bitte das Feedback-Formular.
+                br
+                hr(class='my-4')
+                p Hinweis: Fehler sollten ja eigentlich nicht vorkommen. Sind jedoch welche drin, benutzen Sie bitte das Feedback-Formular.
