@@ -1,0 +1,27 @@
+extends ../../../views/layout
+
+
+block content
+    div(class="main-wrapper" role="main")
+
+        include ../../../views/errors.pug
+        include ../../../views/success.pug
+
+        div(class="container main-content-container")
+            div.jumbotron
+                center
+                    h1 Das wars!
+                br
+                center
+                    p(class="lead") Vielen Dank, dass Sie den 3NF-Trainer abgeschlossen haben!
+                    form(
+                        class=''
+                        method='post'
+                        action='/apps/3nf/checkFirstNfTask'
+                        )
+
+                        input(type='hidden' name='step' value='checkFirstNfTask')
+                        button(type='submit', class='btn btn-primary btn-lg') Neuen Test starten!
+                br   
+                hr(class='my-4')
+                p Hinweis: Fehler sollten ja eigentlich nicht vorkommen. Sind jedoch welche drin, benutzen Sie bitte das Feedback-Formular.

@@ -1,0 +1,79 @@
+extends ../../../views/layout
+
+block append stylesheets
+    link(rel='stylesheet', type='text/css', href='/apps/3nf/css/additional.css')
+
+
+block content
+    div(class="main-wrapper" role="main")
+
+        include ../../../views/errors.pug
+        include ../../../views/success.pug
+
+        div(class="container main-content-container")
+            h1#app-title 3NF-Trainer
+            form(
+            id='3nf_defFuncDepenTypeTask'
+            class=''
+            method='post'
+            action='/apps/3nf/defSecNfTask'
+            )
+                div(class="panel panel-default")
+                    div(class="panel-heading")
+                        h3(class="panel-title") Aufgabe 4:
+                        br
+                        div(class="pull-left")
+                            h3(class="panel-title") Frage: Bestimmen Sie anhand der Primärschlüssel den Typ der funktionalen Abhängigkeit.
+                        div(class="pull-right")
+                            h3(class="panel-title") Schema-Nummer: !{task_nr}
+                        .clearfix
+                    div(class="panel-body")
+                        h5 Primärschlüssel:
+                        - var counter = 1
+                        div
+                            each element in solutionClearPK
+                                p #{counter + ". " + element.loesung}
+                                - counter = counter + 1
+                        div
+                            center
+                                br
+                                h1 Ihre Antwort:
+                                p Wählen sie für jede funktionale Abhängigkeit den Typ aus.
+                                br
+
+                                - var counter = 0
+                                each element in solutionClearFunc
+                                    //h5 #{element.loesung}
+                                    .container
+                                        .row
+                                            .col-md-6.col-md-offset-2
+                                                h5.text-left #{element.loesung}
+                                            .col-md-2
+                                                select.form-control(id="form" + counter)
+                                                    option voll
+                                                    option partiell
+                                                    option transitiv
+                                    br
+                                    - counter = counter + 1
+
+                                br
+                                button(onclick="showSampleSolution()" type="button" class='btn btn-warning' id="btnSampleSolution") Musterlösung einblenden
+                                br
+                                br
+                                div(class="sampleSolution")
+                                    div(class="alert alert-success" role="alert")
+                                        h4 Musterlösung:
+                                        div(class="alert alert-info" role="alert")
+                                            - var counter = 0
+                                            each element in completeSolution
+                                                p(id="solution"+counter) #{element}
+                                                - counter = counter + 1
+
+                                br
+                                button(type='submit' class='btn btn-primary')
+                                    h5 Ergebnis auswerten
+block append foot_scripts
+    script(src='/apps/3nf/js/main.js')
+    script(src='/apps/3nf/js/interact.js')
+    script(src='/apps/3nf/js/defFuncDepenTypeTask.js')
+    script(src='/apps/3nf/js/sampleSolution.js')
