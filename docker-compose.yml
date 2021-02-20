@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   db:
-    image: postgres
+    build: ./db
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
