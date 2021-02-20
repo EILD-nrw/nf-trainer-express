@@ -20,95 +20,9 @@ div(class="header-wrapper")
 
             //Collect the nav links, forms, and other content for toggling
             div(class='collapse navbar-collapse' id="bs-example-navbar-collapse-1")
+                // TODO change CSS and remove list container
                 ul(class='nav navbar-nav')
                     li(class=active_index && 'active')
                         a(href='/') Startseite
                             span(class='sr-only') (current)
-                    li(class='dropdown' class=active_apps && 'active')
-                        a(href='/apps' class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Anwendungen
-                            span(class="caret")
-                        ul(class='dropdown-menu')
-                            li
-                                a(href='/apps/mct') MCT
-                            li
-                                a(href='/apps/sqltrainer') SQL-Trainer
-                            li
-                                a(href='/apps/3nf') 3NF-Trainer
-                            li
-                                a(href='/apps/ertrainer') ER-Trainer
-                            li
-                                a(href='/apps/sqlpuzzle') SQL-Puzzle
-                            li
-                                a(href='/apps/plsql') PL/SQL-Trainer
-                            li
-                                a(href='/apps/bbaum') BBaum-Trainer
-                            li
-                                a(href='/apps/relax') RelaX
-                    li
-                        a(href='/news' class=active_news && 'active') Neuigkeiten
-                    li
-                        a(href="http://wikis.gm.fh-koeln.de" target="_blank") Wiki
-                    //- li
-                    //-     a(href='/construction') Forum
-                    li(class=active_feedback && 'active')
-                        a(href='/feedback') Feedback
-                ul(class='nav navbar-nav navbar-right')
-                    if !user
-                        li(class='dropdown')
-                            a(href='#' class="dropdown-toggle" data-toggle="dropdown") Login
-                                b(class='caret')
-                            ul(class='dropdown-menu' style='padding: 15px; min-width: 280px;')
-                                li
-                                    div(class='row')
-                                        div(class='col-md-12')
-                                            ul(class="nav nav-tabs" id="loginForm" role="tablist")
-                                                li(role="presentation" class="active")
-                                                    a(data-toggle="tab" href="#ldapLogin" role="tab") GM Studierende
-                                                li(role="presentation")
-                                                    a(data-toggle="tab" href="#edbLogin" role="tab") Externe
-                                            
-                                            div(class="tab-content" id="loginFormContent")
-                                                div(class="tab-pane fade in active" id="ldapLogin" role="tabpanel")
-                                                    p(class="text-muted top-buffer-10") Loggen Sie sich mit Ihrer GM-ID ein. 
-                                                    form(class="form" role="form" method="post" action="/auth/login" accept-charset="UTF-8" id="login-nav")
-                                                        input(type="hidden" name='auth_type' id="auth_type" value="ldap")
-                                                        div(class='form-group')
-                                                            label(class='sr-only' for="inputEmail") Benutzername
-                                                            input(type="text" name='username' class="form-control" id="inputEmail" placeholder="Benutzername" required)
-                                                        div(class='form-group')
-                                                            label(class="sr-only" for="inputPassword") Passwort
-                                                            input(type="password" name='password' class="form-control" id="inputPassword" placeholder="Passwort" required)
-                                                        div(class='form-group')
-                                                            button(type='submit' class='btn btn-success btn-block') Anmelden
-                                                    p(class="text-muted") Gehören Sie nicht zum Campus Gummersbach, können Sie sich unter "Externe" anmelden.
-                                                div(class="tab-pane fade" id="edbLogin" role="tabpanel")
-                                                    p(class="text-muted top-buffer-10") Loggen Sie sich mit Ihren EDB-Daten ein. 
-                                                    form(class="form" role="form" method="post" action="/auth/login" accept-charset="UTF-8" id="login-nav")
-                                                        input(type="hidden" name='auth_type' id="auth_type" value="edb")
-                                                        div(class='form-group')
-                                                            label(class='sr-only' for="inputEmail") Benutzername
-                                                            input(type="text" name='username' class="form-control" id="inputEmail" placeholder="Benutzername" required)
-                                                        div(class='form-group')
-                                                            label(class="sr-only" for="inputPassword") Passwort
-                                                            input(type="password" name='password' class="form-control" id="inputPassword" placeholder="Passwort" required)
-                                                            a(href="/reset_password_request") Passwort vergessen?
-                                                        div(class='form-group')
-                                                            button(type='submit' class='btn btn-success btn-block') Anmelden
-                                                        li(class='divider')
-                                                            
-                                                            li
-                                                                p(class="text-muted") Haben Sie noch kein Konto, können Sie sich unten registrieren.
-                                                                input.btn.btn-primary.btn-block(type='button', id='register', value='Registrieren', onclick="location.href='/register';")
-                                
 
-                    else
-                        li(class='dropdown')
-                            a(href='/construction' class="dropdown-toggle" data-toggle="dropdown") Mein Konto
-                                b(class='caret')
-                            ul(class='dropdown-menu' style='padding: 15px;min-width: 250px;')
-                                li
-                                    div(class='row')
-                                        div(class='col-md-12')
-                                            form(class="form" role="form" method="post" action="/auth/logout" accept-charset="UTF-8" id="login-nav")
-                                                div(class='form-group')
-                                                    button(type='submit' class='btn btn-success btn-block') Abmelden
