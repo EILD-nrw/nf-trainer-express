@@ -3,8 +3,7 @@ const { Pool } = require('pg')
 
 const app = express()
 
-// Example Client settings (should probably be moved into an external file / environment variables)
-// Use Pools instead of clients later
+// Basic Pool Connection
 const pool = new Pool({
     user: 'postgres',
     host: 'db',
