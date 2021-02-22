@@ -9,15 +9,26 @@ const pool = new Pool({
     port: 5432,
 })
 
-let client =  await pool.connect()
-
-async function getTime() {
-    let { rows } = await client.query('SELECT NOW()')
-    client.release()
-    return rows[0]
+/**
+ * Helper Function to get a certain task from the database
+ *
+ * @param task_id ID of the current task
+ * @param language Language of the task ('de' for german, everything else returns english)
+ * @returns {Promise<number>} Returns 'Aufgabentext' and 'NF' from the Database
+ */
+async function get_task(task_id, language) {
+    if (language === 'de') {
+        let { rows } = await pool.query('SELECT AUFGABENTEXT, NF FROM AUFGABEN WHERE ID = $1', task_id)
+        return rows
+    } else {
+        let { rows } = await pool.query('SELECT AUFGABENTEXT, NF FROM AUFGABEN_EN WHERE ID = $1', task_id)
+        return rows
+    }
 }
 
-export { getTime }
+export {
+    get_task,
+}
 
 
 
