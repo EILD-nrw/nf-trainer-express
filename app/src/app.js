@@ -95,6 +95,41 @@ app.post('/markViolatingColumnsTask', async (req, res) => {
     res.render(path + 'markViolatingColumnsTask', variables)
 })
 
+app.post('/findFuncDepenTask', async (req, res) => {
+    let variables = {title: 'NF-Trainer', active_apps: true}
+    let currentSubtask = 3
+
+    if (!req.session.taskNr) {
+        res.redirect('/')
+    }
+    let taskNr = req.session.taskNr
+
+    // Fill Variables
+    variables['task'] = await db.getTask(taskNr, 'de')
+    variables['subtask'] = await db.getSubtask(currentSubtask, 'de')
+    let solutionClear = await db.getSolution(taskNr, currentSubtask, 'de')
+
+    let tasktable
+    if(taskNr === 2) {
+        tasktable = await db.getTaskTable(taskNr, 1, 'de')
+    } else {
+        tasktable = await db.getTaskTable(taskNr, 0, 'de')
+    }
+
+    variables['tasktable'] = tasktable
+    variables['keys'] = Object.keys(tasktable[0])
+
+    // Prepare Solution String
+    let solutionString = ''
+    for (let part of solutionClear) {
+        solutionString += (part + ';')
+    }
+    variables['solution'] = solutionString
+    variables['solutionClear'] = solutionClear
+
+    res.render(path + 'findFuncDepenTask', variables)
+})
+
 
 // Start server
 app.listen(8080, () => {
