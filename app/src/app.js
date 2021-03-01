@@ -1,5 +1,7 @@
-const express = require('express'),
-    app = express()
+const express = require('express')
+const cookieSession = require('cookie-session')
+const app = express()
+const db = require('./database')
 
 let path = __dirname + '/views/'
 
@@ -8,6 +10,12 @@ app.set('view engine', 'pug')
 
 // Handle static css and js files automatically
 app.use(express.static(__dirname))
+
+// Use cookies to store taskNr
+app.use(cookieSession({
+    name: 'session',
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+}))
 
 /*
     Application Code
