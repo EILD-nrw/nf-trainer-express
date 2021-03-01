@@ -26,6 +26,41 @@ async function getTask(taskId, language) {
         }
 }
 
-export {
-    get_task,
+async function getSubtask(subtaskId, language) {
+    if (language === 'de') {
+        let { rows } = await pool.query('SELECT AUFGABENTEXT FROM UNTERAUFGABEN WHERE ID = $1', [subtaskId])
+        return rows[0]
+    } else {
+        let { rows } = await pool.query('SELECT AUFGABENTEXT FROM UNTERAUFGABEN_EN WHERE ID = $1', [subtaskId])
+        return rows[0]
+    }
+}
+
+async function getTaskTable(taskId, nf, language) {
+    let querystring = taskId.toString()
+    if (nf !== 0) {
+        querystring += '_1'
+    }
+    if (language !== 'de') {
+        querystring += '_EN'
+    }
+    let { rows } = await pool.query('SELECT * FROM AUFGABE' + querystring)
+    return rows
+}
+
+async function getSolution(taskId, subtaskId, language) {
+    if (language === 'de') {
+        let { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
+        return rows[0]
+    } else {
+        let { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN_EN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
+        return rows[0]
+    }
+}
+
+module.exports = {
+    getTask,
+    getSubtask,
+    getTaskTable,
+    getSolution,
 }
