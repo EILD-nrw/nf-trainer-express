@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 /*
     Start Trainer
  */
-app.post('/checkFirstNfTask', async (req, res, next) => {
+app.post('/checkFirstNfTask', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
 
     // Choose random taskNr
