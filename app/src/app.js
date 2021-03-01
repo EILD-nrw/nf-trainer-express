@@ -21,6 +21,11 @@ app.use(cookieSession({
     Application Code
  */
 
+// Helper Function
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // Index Page
 app.get('/', (req, res) => {
     // Variables for pug rendering
