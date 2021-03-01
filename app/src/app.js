@@ -40,7 +40,6 @@ app.get('/', (req, res) => {
  */
 app.post('/checkFirstNfTask', async (req, res, next) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
-    let done = () => res.render(path + 'checkFirstNfTask', variables)
 
     // Choose random taskNr
     let taskNr = getRandomInt(1, 8)
