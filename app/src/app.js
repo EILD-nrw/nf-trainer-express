@@ -73,7 +73,7 @@ app.post('/markViolatingColumnsTask', async (req, res) => {
 
     // Skip Task since the table is already in 1NF
     if (req.body.firstNf === '1') {
-        res.redirect(307, '/apps/3nf/findFuncDepenTask')
+        res.redirect(307, '/findFuncDepenTask')
     }
 
     // Fill Variables
