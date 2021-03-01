@@ -18,6 +18,7 @@ app.use(bodyparser.urlencoded({extended: true}))
 // Use cookies to store taskNr
 app.use(cookieSession({
     name: 'session',
+    secret: 'nf_secret',
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
 }))
 
