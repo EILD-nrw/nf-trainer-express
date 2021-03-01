@@ -1,92 +1,83 @@
-extends ../../../views/layout 
+extends layout
 
 block append stylesheets
-  link(rel='stylesheet', type='text/css', href='/apps/3nf/css/additional.css')
- 
- 
-block content 
-    div(class="main-wrapper" role="main") 
- 
-        include ../../../views/errors.pug 
-        include ../../../views/success.pug 
+    link(rel='stylesheet', type='text/css', href='/css/additional.css')
 
+
+block content 
+    div(class="main-wrapper" role="main")
         div(class="container main-content-container")
             h1#app-title 3NF-Trainer
             form(
-            id='3nf_checkFirstNfTask'
-            class=''
-            method='post'
-            action='/apps/3nf/markViolatingColumnsTask'
+                id='3nf_checkFirstNfTask'
+                class=''
+                method='post'
+                action='/markViolatingColumnsTask'
             )
-                - var actualSubtask = subtask[0]
 
-                - var actualTask = task[0]
-
-                - var nf = actualTask.nf
-
-                          div(class="panel panel-default")
-                            div(class="panel-heading")
-                              h3(class="panel-title") Aufgabe 1:
-                              br
-                              div(class="pull-left")
-                                h3(class="panel-title") Frage: !{actualSubtask.aufgabentext}
-                              div(class="pull-right")
-                                h3(class="panel-title") Schema-Nummer: !{task_nr}
-                              .clearfix
-                            div(class="panel-body")
-                                h5 Hilfstext: 
-                                p !{actualTask.aufgabentext}
-                                br
-                                button(onclick="hideTable()" type="button" class='btn btn-warning' id="btnTabelleAusblenden") Tabelleninhalt ausblenden
-                                br
-                                br
-                                div
-                                  .table-responsive
-                                    table(class="table table-striped table-bordered")
-                                        tr
-                                          each element in keys
+                div(class="panel panel-default")
+                    div(class="panel-heading")
+                        h3(class="panel-title") Aufgabe 1:
+                        br
+                        div(class="pull-left")
+                            h3(class="panel-title") Frage: !{subtask.aufgabentext}
+                        div(class="pull-right")
+                            h3(class="panel-title") Schema-Nummer: !{task_nr}
+                        .clearfix
+                    div(class="panel-body")
+                        h5 Hilfstext:
+                        p !{task.aufgabentext}
+                        br
+                        button(onclick="hideTable()" type="button" class='btn btn-warning' id="btnTabelleAusblenden") Tabelleninhalt ausblenden
+                        br
+                        br
+                        div
+                            .table-responsive
+                                table(class="table table-striped table-bordered")
+                                    tr
+                                        each element in keys
                                             th #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                        each element in tasktable
-                                          tr(class="trToHide")
+                                    each element in tasktable
+                                        tr(class="trToHide")
                                             each attribute in element
-                                              td !{attribute}
-                                  center
-                                    
-                                    br
-                                    h1 Ihre Antwort:
-                                    br
-                                    button(onclick="showSampleSolution()" type="button" class='btn btn-warning' id="btnSampleSolution") Musterlösung einblenden
-                                    br
-                                    br
-                                    div(class="sampleSolution")
-                                      div(class="alert alert-success" role="alert")
+                                                td !{attribute}
+                            center
+
+                                br
+                                h1 Ihre Antwort:
+                                br
+                                button(onclick="showSampleSolution()" type="button" class='btn btn-warning' id="btnSampleSolution") Musterlösung einblenden
+                                br
+                                br
+                                div(class="sampleSolution")
+                                    div(class="alert alert-success" role="alert")
                                         h4 Musterlösung:
                                         div(class="alert alert-info" role="alert")
-                                          h5 Die Tabelle befindet sich in Normalform: #{nf}
-                                          p 0 = Nein ; 1 = Ja
-                                    div(class='list-group btn-group-toggle' data-toggle='buttons' style="width:300px")
-                                      label(class='btn list-group-item')
+                                            h5 Die Tabelle befindet sich in Normalform: #{task.nf}
+                                            p 0 = Nein ; 1 = Ja
+                                div(class='list-group btn-group-toggle' data-toggle='buttons' style="width:300px")
+                                    label(class='btn list-group-item')
                                         input(
-                                          type='radio'
-                                          name='firstNf'
-                                          value='1'
+                                            type='radio'
+                                            name='firstNf'
+                                            value='1'
                                         )
                                         | Ja
-                                      br
-                                      label(class='btn list-group-item')
+                                    br
+                                    label(class='btn list-group-item')
                                         input(
-                                          type='radio'
-                                          name='firstNf'
-                                          value='0'
+                                            type='radio'
+                                            name='firstNf'
+                                            value='0'
                                         )
                                         | Nein
-                                    div(id="valueHolder" value=""+nf+"")
-                              
-                                    button(type='submit' class='btn btn-primary') 
-                                      h5 Ergebnis auswerten
+                                div(id="valueHolder" value="" + task.nf + "")
+
+                                button(type='submit' class='btn btn-primary')
+                                    h5 Ergebnis auswerten
 
 
 block append foot_scripts 
-    script(src='/apps/3nf/js/main.js')
-    script(src='/apps/3nf/js/checkFirstNfTask.js')
-    script(src='/apps/3nf/js/sampleSolution.js')
+    script(src='/js/main.js')
+    script(src='/js/checkFirstNfTask.js')
+    script(src='/js/sampleSolution.js')
