@@ -45,6 +45,7 @@ app.get('/', (req, res) => {
  */
 app.post('/checkFirstNfTask', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
+    let currentSubtask = 1
 
     // Choose random taskNr
     let taskNr = getRandomInt(1, 8)
@@ -53,7 +54,7 @@ app.post('/checkFirstNfTask', async (req, res) => {
 
     // Fill Variables
     variables['task'] = await db.getTask(taskNr, 'de')
-    variables['subtask'] = await db.getSubtask(taskNr, 'de')
+    variables['subtask'] = await db.getSubtask(currentSubtask, 'de')
     let tasktable = await db.getTaskTable(taskNr, 0, 'de')
     variables['tasktable'] = tasktable
     variables['keys'] = Object.keys(tasktable[0])
@@ -63,6 +64,7 @@ app.post('/checkFirstNfTask', async (req, res) => {
 
 app.post('/markViolatingColumnsTask', async (req, res, next) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
+    let currentSubtask = 2
 
     if (!req.session.taskNr) {
         res.redirect('/')
