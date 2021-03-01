@@ -76,6 +76,21 @@ app.post('/markViolatingColumnsTask', async (req, res) => {
         res.redirect(307, '/apps/3nf/findFuncDepenTask')
     }
 
+    // Fill Variables
+    variables['task'] = await db.getTask(taskNr, 'de')
+    variables['subtask'] = await db.getSubtask(currentSubtask, 'de')
+    let tasktable = await db.getTaskTable(taskNr, 0, 'de')
+    variables['tasktable'] = tasktable
+    variables['keys'] = Object.keys(tasktable[0])
+    let solutionClear = await db.getSolution(taskNr, currentSubtask, 'de')
+
+    // Prepare Solution String
+    let solutionString = ''
+    for (let part of solutionClear) {
+        solutionString += (part + ';')
+    }
+    variables['solution'] = solutionString
+    variables['solutionClear'] = solutionClear
 
     res.render(path + 'markViolatingColumnsTask', variables)
 })
