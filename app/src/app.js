@@ -40,10 +40,19 @@ app.post('/checkFirstNfTask', (req, res, next) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
     let done = () => res.render(path + 'checkFirstNfTask', variables)
 
-    let counter = 0
-    let number_functions = 3
+    // Choose random taskNr
+    let taskNr = getRandomInt(1, 8)
+    req.session.taskNr = taskNr
+    variables['task_nr'] = taskNr
 
-    // getTask
+    // Fill Variables
+    variables['task'] = await db.getTask(taskNr, 'de')
+    variables['subtask'] = await db.getSubtask(taskNr, 'de')
+    let tasktable = await db.getTaskTable(taskNr, 0, 'de')
+    variables['tasktable'] = tasktable
+    variables['keys'] = Object.keys(tasktable[0])
+
+    res.render(path + 'checkFirstNfTask', variables)
 })
 
 
