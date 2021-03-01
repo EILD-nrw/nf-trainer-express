@@ -51,10 +51,10 @@ async function getTaskTable(taskId, nf, language) {
 async function getSolution(taskId, subtaskId, language) {
     if (language === 'de') {
         let { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
-        return rows[0]
+        return rows
     } else {
         let { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN_EN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
-        return rows[0]
+        return rows
     }
 }
 
