@@ -1,39 +1,31 @@
-extends ../../../views/layout 
+extends layout 
 
 block append stylesheets
-  link(rel='stylesheet', type='text/css', href='/apps/3nf/css/additional.css')
+  link(rel='stylesheet', type='text/css', href='/css/additional.css')
  
  
 block content 
     div(class="main-wrapper" role="main") 
- 
-        include ../../../views/errors.pug 
-        include ../../../views/success.pug 
-
         div(class="container main-content-container")
             h1#app-title 3NF-Trainer
             form(
             id='3nf_findFuncDepenTask'
             class=''
             method='post'
-            action='/apps/3nf/defPkTask'
+            action='/defPkTask'
             )
-                - var actualSubtask = subtask[0]
-
-                - var actualTask = task[0]
-
                           div(class="panel panel-default")
                             div(class="panel-heading")
                               h3(class="panel-title") Aufgabe 2:
                               br
                               div(class="pull-left")
-                                h3(class="panel-title") Frage: !{actualSubtask.aufgabentext}
+                                h3(class="panel-title") Frage: !{subtask.aufgabentext}
                               div(class="pull-right")
                                 h3(class="panel-title") Schema-Nummer: !{task_nr}
                               .clearfix
                             div(class="panel-body")
                                 h5 Hilfstext: 
-                                p !{actualTask.aufgabentext}
+                                p !{task.aufgabentext}
                                 br
                                 button(onclick="hideTable()" type="button" class='btn btn-warning' id="btnTabelleAusblenden") Tabelleninhalt ausblenden
                                 br
@@ -125,7 +117,7 @@ block content
                                       div(id="valueHolderInputCount" value=""+ i +"")
                                       div(id="valueHolderSolution" value=""+ solution +"")
 block append foot_scripts 
-    script(src='/apps/3nf/js/main.js')
-    script(src='/apps/3nf/js/interact.js')
-    script(src='/apps/3nf/js/findFuncDepenTask.js')
-    script(src='/apps/3nf/js/sampleSolution.js')
+    script(src='/js/main.js')
+    script(src='/js/interact.js')
+    script(src='/js/findFuncDepenTask.js')
+    script(src='/js/sampleSolution.js')
