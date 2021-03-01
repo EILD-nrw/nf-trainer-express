@@ -8,8 +8,8 @@ $('#3nf_checkFirstNfTask').on('submit', function(e) {
     } else {
 
         let valueHolder = $('#valueHolder')
-        if((valueHolder.attr('value') === 1 && firstNfInput[1].checked === true
-            || (valueHolder.attr('value') === 0 && firstNfInput[0].checked === true))) {
+        if((valueHolder.attr('value') === '1' && firstNfInput[1].checked === true
+            || (valueHolder.attr('value') === '0' && firstNfInput[0].checked === true))) {
 
             console.log(valueHolder.attr('value'));
 
