@@ -1,5 +1,6 @@
 const express = require('express')
 const cookieSession = require('cookie-session')
+const bodyparser = require('body-parser')
 const app = express()
 const db = require('./database')
 
@@ -10,6 +11,9 @@ app.set('view engine', 'pug')
 
 // Handle static css and js files automatically
 app.use(express.static(__dirname))
+
+// Parse Post-Body
+app.use(bodyparser.urlencoded({extended: true}))
 
 // Use cookies to store taskNr
 app.use(cookieSession({
