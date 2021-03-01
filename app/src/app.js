@@ -122,7 +122,7 @@ app.post('/findFuncDepenTask', async (req, res) => {
     // Prepare Solution String
     let solutionString = ''
     for (let part of solutionClear) {
-        solutionString += (part + ';')
+        solutionString += (part.loesung + '#')
     }
     variables['solution'] = solutionString
     variables['solutionClear'] = solutionClear
