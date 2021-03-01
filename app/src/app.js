@@ -57,6 +57,19 @@ app.post('/checkFirstNfTask', async (req, res, next) => {
     res.render(path + 'checkFirstNfTask', variables)
 })
 
+app.post('/markViolatingColumnsTask', async (req, res, next) => {
+    let variables = {title: 'NF-Trainer', active_apps: true}
+
+    if (!req.session.taskNr) {
+        res.redirect('/')
+    }
+    let taskNr = req.session.taskNr
+
+
+
+    res.render(path + 'markViolatingColumnsTask', variables)
+})
+
 
 // Start server
 app.listen(8080, () => {
