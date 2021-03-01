@@ -35,8 +35,10 @@ app.get('/', (req, res) => {
     res.render(path + '3nf', variables)
 })
 
-// Start Trainer
-app.post('/checkFirstNfTask', (req, res, next) => {
+/*
+    Start Trainer
+ */
+app.post('/checkFirstNfTask', async (req, res, next) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
     let done = () => res.render(path + 'checkFirstNfTask', variables)
 
