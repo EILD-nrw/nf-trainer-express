@@ -1,7 +1,7 @@
 extends layout
 
 block append stylesheets
-    link(rel='stylesheet', type='text/css', href='/apps/3nf/css/additional.css')
+    link(rel='stylesheet', type='text/css', href='/css/additional.css')
 
 
 block content 
@@ -78,7 +78,7 @@ block content
                                 div(id="valueHolderInputCount" value="" + i + "")
                                 div(id="valueHolderSolution" value="" + solution + "")
 block append foot_scripts 
-    script(src='/apps/3nf/js/main.js')
-    script(src='/apps/3nf/js/interact.js')
-    script(src='/apps/3nf/js/markViolatingColumnsTask.js')
-    script(src='/apps/3nf/js/sampleSolution.js')
+    script(src='/js/main.js')
+    script(src='/js/interact.js')
+    script(src='/js/markViolatingColumnsTask.js')
+    script(src='/js/sampleSolution.js')
