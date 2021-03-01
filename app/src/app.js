@@ -62,7 +62,7 @@ app.post('/checkFirstNfTask', async (req, res) => {
     res.render(path + 'checkFirstNfTask', variables)
 })
 
-app.post('/markViolatingColumnsTask', async (req, res, next) => {
+app.post('/markViolatingColumnsTask', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
     let currentSubtask = 2
 
