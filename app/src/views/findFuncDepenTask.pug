@@ -1,121 +1,121 @@
-extends layout 
+extends layout
 
 block append stylesheets
-  link(rel='stylesheet', type='text/css', href='/css/additional.css')
- 
- 
+    link(rel='stylesheet', type='text/css', href='/css/additional.css')
+
+
 block content 
-    div(class="main-wrapper" role="main") 
+    div(class="main-wrapper" role="main")
         div(class="container main-content-container")
             h1#app-title 3NF-Trainer
             form(
-            id='3nf_findFuncDepenTask'
-            class=''
-            method='post'
-            action='/defPkTask'
+                id='3nf_findFuncDepenTask'
+                class=''
+                method='post'
+                action='/defPkTask'
             )
-                          div(class="panel panel-default")
-                            div(class="panel-heading")
-                              h3(class="panel-title") Aufgabe 2:
-                              br
-                              div(class="pull-left")
-                                h3(class="panel-title") Frage: !{subtask.aufgabentext}
-                              div(class="pull-right")
-                                h3(class="panel-title") Schema-Nummer: !{task_nr}
-                              .clearfix
-                            div(class="panel-body")
-                                h5 Hilfstext: 
-                                p !{task.aufgabentext}
-                                br
-                                button(onclick="hideTable()" type="button" class='btn btn-warning' id="btnTabelleAusblenden") Tabelleninhalt ausblenden
-                                br
-                                br
-                                div
-                                  .table-responsive
-                                    table(class="table table-striped table-bordered")
-                                        tr
-                                          each element in keys
-                                              th #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                        each element in tasktable
-                                          tr(class="trToHide")
+                div(class="panel panel-default")
+                    div(class="panel-heading")
+                        h3(class="panel-title") Aufgabe 2:
+                        br
+                        div(class="pull-left")
+                            h3(class="panel-title") Frage: !{subtask.aufgabentext}
+                        div(class="pull-right")
+                            h3(class="panel-title") Schema-Nummer: !{task_nr}
+                        .clearfix
+                    div(class="panel-body")
+                        h5 Hilfstext:
+                        p !{task.aufgabentext}
+                        br
+                        button(onclick="hideTable()" type="button" class='btn btn-warning' id="btnTabelleAusblenden") Tabelleninhalt ausblenden
+                        br
+                        br
+                        div
+                            .table-responsive
+                                table(class="table table-striped table-bordered")
+                                    tr
+                                        each element in keys
+                                            th #{element.charAt(0).toUpperCase() + element.slice(1)}
+                                    each element in tasktable
+                                        tr(class="trToHide")
                                             each attribute in element
-                                              td !{attribute}
+                                                td !{attribute}
 
-                                  center
-                                    
-                                    br
+                            center
 
-                                    h1 Ihre Antwort:
-                                    p Ziehen Sie alle Kästchen der betreffenden Spalte in den entsprechenden grauen Kasten.
-                                    p Tipp: Es werden nicht immer alle Kästen benötigt!
-                                    br
-                                    button(onclick="showSampleSolution()" type="button" class='btn btn-warning' id="btnSampleSolution") Musterlösung einblenden
-                                    br
-                                    br
-                                    div(class="sampleSolution")
-                                      div(class="alert alert-success" role="alert")
+                                br
+
+                                h1 Ihre Antwort:
+                                p Ziehen Sie alle Kästchen der betreffenden Spalte in den entsprechenden grauen Kasten.
+                                p Tipp: Es werden nicht immer alle Kästen benötigt!
+                                br
+                                button(onclick="showSampleSolution()" type="button" class='btn btn-warning' id="btnSampleSolution") Musterlösung einblenden
+                                br
+                                br
+                                div(class="sampleSolution")
+                                    div(class="alert alert-success" role="alert")
                                         h4 Musterlösung:
                                         h5 Funktionalen Abhängigkeiten:
                                         - var counter = 1
                                         div(class="alert alert-info" role="alert")
-                                          each element in solutionClear
-                                            p #{counter + ". Abhängigkeit: " + element.loesung}
-                                            - counter = counter + 1
+                                            each element in solutionClear
+                                                p #{counter + ". Abhängigkeit: " + element.loesung}
+                                                - counter = counter + 1
                                         h5 Erklärung: Primärschlüssel:Spalten
 
-                                    .row
-                                      .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                                .row
+                                    .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution1")
-                                          each element in keys
+                                            each element in keys
                                                 div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                          br
-                                          br
-                                          p Primärschlüssel:
-                                            div(id="primary-dropzone1" class="primary_key_dropzone dropzone")
-                                          p Spalten:
-                                            div(id="second-dropzone1" class="column_dropzone dropzone")
-                                      
-                                      .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                                            br
+                                            br
+                                            p Primärschlüssel:
+                                                div(id="primary-dropzone1" class="primary_key_dropzone dropzone")
+                                            p Spalten:
+                                                div(id="second-dropzone1" class="column_dropzone dropzone")
+
+                                    .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution2")
-                                          each element in keys
+                                            each element in keys
                                                 div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                          br
-                                          br
-                                          p Primärschlüssel:
-                                            div(id="primary-dropzone2" class="primary_key_dropzone dropzone")
-                                          p Spalten:
-                                            div(id="second-dropzone2" class="column_dropzone dropzone")
+                                            br
+                                            br
+                                            p Primärschlüssel:
+                                                div(id="primary-dropzone2" class="primary_key_dropzone dropzone")
+                                            p Spalten:
+                                                div(id="second-dropzone2" class="column_dropzone dropzone")
 
-                                      .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                                    .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution3")
-                                          each element in keys
+                                            each element in keys
                                                 div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                          br
-                                          br
-                                          p Primärschlüssel:
-                                            div(id="primary-dropzone3" class="primary_key_dropzone dropzone")
-                                          p Spalten
-                                            div(id="second-dropzone3" class="column_dropzone dropzone")
+                                            br
+                                            br
+                                            p Primärschlüssel:
+                                                div(id="primary-dropzone3" class="primary_key_dropzone dropzone")
+                                            p Spalten
+                                                div(id="second-dropzone3" class="column_dropzone dropzone")
 
-                                      .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                                    .col-xs-12.col-sm-12.col-md-6.col-lg-3
 
                                         div(class="possibleSolution4")
-                                          each element in keys
+                                            each element in keys
                                                 div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                          br
-                                          br
-                                          p Primärschlüssel:
-                                            div(id="primary-dropzone4" class="primary_key_dropzone dropzone")
-                                          p Spalten:
-                                            div(id="second-dropzone4" class="column_dropzone dropzone")
+                                            br
+                                            br
+                                            p Primärschlüssel:
+                                                div(id="primary-dropzone4" class="primary_key_dropzone dropzone")
+                                            p Spalten:
+                                                div(id="second-dropzone4" class="column_dropzone dropzone")
 
-                                .row
-                                  center
-                                    button(type='submit' class='btn btn-primary') 
-                                      h5 Ergebnis auswerten
+                        .row
+                            center
+                                button(type='submit' class='btn btn-primary')
+                                    h5 Ergebnis auswerten
 
-                                      div(id="valueHolderInputCount" value=""+ i +"")
-                                      div(id="valueHolderSolution" value=""+ solution +"")
+                                    div(id="valueHolderInputCount" value="" + i + "")
+                                    div(id="valueHolderSolution" value="" + solution + "")
 block append foot_scripts 
     script(src='/js/main.js')
     script(src='/js/interact.js')
