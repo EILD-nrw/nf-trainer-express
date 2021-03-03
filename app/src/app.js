@@ -82,9 +82,9 @@ app.post('/markViolatingColumnsTask', async (req, res) => {
     let tasktable = await db.getTaskTable(taskNr, 0, 'de')
     variables['tasktable'] = tasktable
     variables['keys'] = Object.keys(tasktable[0])
-    let solutionClear = await db.getSolution(taskNr, currentSubtask, 'de')
 
     // Prepare Solution String
+    let solutionClear = await db.getSolution(taskNr, currentSubtask, 'de')
     let solutionString = ''
     for (let part of solutionClear) {
         solutionString += (part + ';')
@@ -107,10 +107,9 @@ app.post('/findFuncDepenTask', async (req, res) => {
     // Fill Variables
     variables['task'] = await db.getTask(taskNr, 'de')
     variables['subtask'] = await db.getSubtask(currentSubtask, 'de')
-    let solutionClear = await db.getSolution(taskNr, currentSubtask, 'de')
 
     let tasktable
-    if(taskNr === 2) {
+    if (taskNr === 2) {
         tasktable = await db.getTaskTable(taskNr, 1, 'de')
     } else {
         tasktable = await db.getTaskTable(taskNr, 0, 'de')
@@ -120,6 +119,7 @@ app.post('/findFuncDepenTask', async (req, res) => {
     variables['keys'] = Object.keys(tasktable[0])
 
     // Prepare Solution String
+    let solutionClear = await db.getSolution(taskNr, currentSubtask, 'de')
     let solutionString = ''
     for (let part of solutionClear) {
         solutionString += (part.loesung + '#')
