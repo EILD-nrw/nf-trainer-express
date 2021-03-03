@@ -1,15 +1,11 @@
-extends ../../../views/layout 
+extends layout
 
 block append stylesheets
   link(rel='stylesheet', type='text/css', href='/apps/3nf/css/additional.css')
  
  
 block content 
-    div(class="main-wrapper" role="main") 
- 
-        include ../../../views/errors.pug 
-        include ../../../views/success.pug 
-
+    div(class="main-wrapper" role="main")
         div(class="container main-content-container")
             h1#app-title 3NF-Trainer
             form(
@@ -91,7 +87,7 @@ block content
                                     div(id="valueHolderInputCount" value=""+ i +"")
                                     div(id="valueHolderSolution" value=""+ solution +"")
 block append foot_scripts 
-    script(src='/apps/3nf/js/main.js')
-    script(src='/apps/3nf/js/interact.js')
-    script(src='/apps/3nf/js/defPkTask.js')
-    script(src='/apps/3nf/js/sampleSolution.js')
+    script(src='/js/main.js')
+    script(src='/js/interact.js')
+    script(src='/js/defPkTask.js')
+    script(src='/js/sampleSolution.js')
