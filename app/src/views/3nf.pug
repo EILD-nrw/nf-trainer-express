@@ -3,8 +3,17 @@ extends layout
 block content
     div(class="main-wrapper" role="main")
 
-        include errors.pug
-        include success.pug
+        // TODO REMOVE SKIP
+        form(
+        class=''
+        method='post'
+        action='/defSecNfTask'
+        )
+            button(
+            type='submit'
+            class='btn btn-primary btn-lg'
+            ) Skip
+
 
         // TODO Format text
         div(class="container main-content-container")
