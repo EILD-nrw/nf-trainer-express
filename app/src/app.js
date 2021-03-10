@@ -253,9 +253,6 @@ app.post('/defSecNfTask', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
     let currentSubtask = 5
 
-    // TODO REMOVE SKIP
-    req.session.taskNr = 3
-
     if (!req.session.taskNr) {
         res.redirect('/')
     }
@@ -341,6 +338,22 @@ app.post('/defSecNfTask', async (req, res) => {
     variables['completeSolutionFuncType'] = completeSolution;
 
     res.render(path + 'defSecNfTask', variables)
+})
+
+app.post('/defThiNfTask', async (req, res) => {
+    let variables = {title: 'NF-Trainer', active_apps: true}
+    let currentSubtask = 5
+
+    // TODO REMOVE SKIP
+    req.session.taskNr = 3
+
+    if (!req.session.taskNr) {
+        res.redirect('/')
+    }
+    let taskNr = req.session.taskNr
+
+
+    res.render(path + 'defThiNfTask', variables)
 })
 
 // Start server
