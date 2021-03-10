@@ -435,6 +435,12 @@ app.post('/defThiNfTask', async (req, res) => {
     res.render(path + 'defThiNfTask', variables)
 })
 
+app.post('/lastPage', async (req, res) => {
+    let variables = {title: 'NF-Trainer', active_apps: true}
+
+    res.render(path + 'lastPage', variables)
+})
+
 // Start server
 app.listen(8080, () => {
     console.log(`Server listening at http://localhost:8080/`)
