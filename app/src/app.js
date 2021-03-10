@@ -32,7 +32,7 @@ function getRandomInt(min, max) {
 }
 
 // Index Page
-app.get('/', (req, res) => {
+app.get(['/', '/index'], (req, res) => {
     // Variables for pug rendering
     let variables = {title: 'NF-Trainer', active_apps: true}
 
@@ -343,9 +343,6 @@ app.post('/defSecNfTask', async (req, res) => {
 app.post('/defThiNfTask', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
     let currentSubtask = 6
-
-    // TODO REMOVE SKIP
-    req.session.taskNr = 3
 
     if (!req.session.taskNr) {
         res.redirect('/')
