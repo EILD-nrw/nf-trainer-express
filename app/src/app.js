@@ -316,7 +316,7 @@ app.post('/defSecNfTask', async (req, res) => {
     let pks = variables['solutionClearPK'];
 
     for (let i = 0; i < funcDep.length; i++) {
-        let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ");
+        let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ")
         let count = 0;
         for (let a = 0; a < possiblePKS.length; a++) {
             for (let b = 0; b < pks.length; b++) {
@@ -327,11 +327,11 @@ app.post('/defSecNfTask', async (req, res) => {
         }
 
         if (count === pks.length) {
-            completeSolution[i] = funcDep[i].loesung + " → " + "voll";
+            completeSolution[i] = funcDep[i].loesung + " → " + "voll"
         } else if (count === 0) {
-            completeSolution[i] = funcDep[i].loesung + " → " + "transitiv";
+            completeSolution[i] = funcDep[i].loesung + " → " + "transitiv"
         } else {
-            completeSolution[i] = funcDep[i].loesung + " → " + "partiell";
+            completeSolution[i] = funcDep[i].loesung + " → " + "partiell"
         }
     }
 
@@ -342,7 +342,7 @@ app.post('/defSecNfTask', async (req, res) => {
 
 app.post('/defThiNfTask', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
-    let currentSubtask = 5
+    let currentSubtask = 6
 
     // TODO REMOVE SKIP
     req.session.taskNr = 3
@@ -351,6 +351,85 @@ app.post('/defThiNfTask', async (req, res) => {
         res.redirect('/')
     }
     let taskNr = req.session.taskNr
+
+    // Fill Variables
+    variables['task'] = await db.getTask(taskNr, 'de')
+    variables['subtask'] = await db.getSubtask(currentSubtask, 'de')
+
+    let tasktable
+    if (taskNr === 2) {
+        tasktable = await db.getTaskTable(taskNr, 1, 'de')
+    } else {
+        tasktable = await db.getTaskTable(taskNr, 0, 'de')
+    }
+    variables['tasktable'] = tasktable
+    variables['keys'] = Object.keys(tasktable[0])
+
+    // Prepare Solution String 1
+    let solutionClear = await db.getSolution(taskNr, 6, 'de')
+    let solutionString = ''
+    for (let part of solutionClear) {
+        solutionString += (part.loesung + '#')
+    }
+
+    variables['solution'] = solutionString
+    variables['solutionClear'] = solutionClear
+
+    // Prepare Solution String 2
+    let solutionClearFunc = await db.getSolution(taskNr, 3, 'de')
+    solutionString = ''
+    for (let part of solutionClearFunc) {
+        solutionString += (part.loesung + ';')
+    }
+
+    for (element of solutionClearFunc) {
+        element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
+    }
+
+    variables['solutionFunc'] = solutionString
+    variables['solutionClearFunc'] = solutionClearFunc
+
+    // Prepare Solution String 3
+    let solutionClearPK = await db.getSolution(taskNr, 3, 'de')
+    solutionString = ''
+    for (let part of solutionClearPK) {
+        solutionString += (part.loesung + ';')
+    }
+
+    for (element of solutionClearPK) {
+        element.loesung = element.loesung.replace(new RegExp(';', 'g'), '; ')
+    }
+
+    variables['solutionPK'] = solutionString
+    variables['solutionClearPK'] = solutionClearPK
+
+    let completeSolution = [];
+
+    let funcDep = variables['solutionClearFunc'];
+
+    let pks = variables['solutionClearPK'];
+
+    for (let i = 0; i < funcDep.length; i++) {
+        let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ")
+        let count = 0;
+        for (let a = 0; a < possiblePKS.length; a++) {
+            for (let b = 0; b < pks.length; b++) {
+                if (pks[b].loesung.localeCompare(possiblePKS[a]) === 0) {
+                    count = count + 1;
+                }
+            }
+        }
+
+        if (count === pks.length) {
+            completeSolution[i] = funcDep[i].loesung + " → " + "voll"
+        } else if (count === 0) {
+            completeSolution[i] = funcDep[i].loesung + " → " + "transitiv"
+        } else {
+            completeSolution[i] = funcDep[i].loesung + " → " + "partiell"
+        }
+    }
+
+    variables['completeSolutionFuncType'] = completeSolution
 
 
     res.render(path + 'defThiNfTask', variables)
