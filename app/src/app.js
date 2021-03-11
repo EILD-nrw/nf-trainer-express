@@ -55,9 +55,8 @@ async function getTaskTable(taskNr, subtaskNr) {
     return variables
 }
 
-async function getSolutionVariables(taskNr, subtaskNr) {
+async function getFirstSolution(taskNr, subtaskNr) {
     let variables = {}
-
     let solutionClear = await db.getSolution(taskNr, subtaskNr, 'de')
     let solutionString = ''
     for (let part of solutionClear) {
@@ -66,237 +65,100 @@ async function getSolutionVariables(taskNr, subtaskNr) {
     variables['solution'] = solutionString
     variables['solutionClear'] = solutionClear
 
-    if (subtaskNr === 3) {
-        let solutionClear = await db.getSolution(taskNr, subtaskNr, 'de')
-        let solutionString = ''
-        for (let part of solutionClear) {
-            solutionString += (part.loesung + ';')
-        }
-        variables['solution'] = solutionString
-        variables['solutionClear'] = solutionClear
+    return variables
+}
+
+async function getFuncSolution(taskNr) {
+    let variables = {}
+
+    let solutionFuncDepClear = await db.getSolution(taskNr, 3, 'de')
+    let solutionFuncDepString = ''
+    for (let part of solutionFuncDepClear) {
+        solutionFuncDepString += (part.loesung + ';')
     }
-    if (subtaskNr === 4) {
-        // Prepare Solution String 1
-        let solutionClear = await db.getSolution(taskNr, subtaskNr, 'de')
-        let solutionString = ''
-        for (let part of solutionClear) {
-            solutionString += (part.loesung + ';')
-        }
-        variables['solution'] = solutionString
-        variables['solutionClear'] = solutionClear
+    variables['solutionFuncDepString'] = solutionFuncDepString
 
-        // Prepare Solution String 2
-        let solutionFuncDepenClear = await db.getSolution(taskNr, 3, 'de')
-        let solutionFuncDepenString = ''
-        for (let part of solutionFuncDepenClear) {
-            solutionFuncDepenString += (part.loesung + ';')
-        }
-        variables['solutionFuncDepen'] = solutionFuncDepenString
-
-        for (element of solutionFuncDepenClear) {
-            element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
-        }
-
-        variables['solutionFuncDepenClear'] = solutionFuncDepenClear
-    }
-    if (subtaskNr === 5) {
-        let solutionClear = await db.getSolution(taskNr, 3, 'de')
-        let solutionString = ''
-        for (let part of solutionClear) {
-            solutionString += (part.loesung + ';')
-        }
-
-        for (element of solutionClear) {
-            element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
-        }
-
-        variables['solutionFunc'] = solutionString
-        variables['solutionClearFunc'] = solutionClear
-
-        // Prepare Solution String 2
-        let solutionClearPK = await db.getSolution(taskNr, 4, 'de')
-        let solutionStringPK = ''
-        for (let part of solutionClear) {
-            solutionString += (part.loesung + ';')
-        }
-
-        for (element of solutionClearPK) {
-            element.loesung = element.loesung.replace(new RegExp(';', 'g'), '; ')
-        }
-
-        variables['solutionPK'] = solutionStringPK
-        variables['solutionClearPK'] = solutionClearPK
-
-        let completeSolution = [];
-
-        let funcDep = variables['solutionClearFunc'];
-
-        let pks = variables['solutionClearPK'];
-
-        for (let i = 0; i < funcDep.length; i++) {
-            let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ");
-            let count = 0;
-            for (let a = 0; a < possiblePKS.length; a++) {
-                for (let b = 0; b < pks.length; b++) {
-                    if (pks[b].loesung.localeCompare(possiblePKS[a]) === 0) {
-                        count = count + 1;
-                    }
-                }
-            }
-
-            if (count === pks.length) {
-                completeSolution[i] = funcDep[i].loesung + " → " + "voll";
-            } else if (count === 0) {
-                completeSolution[i] = funcDep[i].loesung + " → " + "transitiv";
-            } else {
-                completeSolution[i] = funcDep[i].loesung + " → " + "partiell";
-            }
-        }
-
-        variables['completeSolution'] = completeSolution;
-    }
-    // TODO Subtask 5 double?
-    if (subtaskNr === 5) {
-        // Prepare Solution String 1
-        let solutionClear = await db.getSolution(taskNr, 3, 'de')
-        let solutionString = ''
-        for (let part of solutionClear) {
-            solutionString += (part.loesung + ';')
-        }
-
-        variables['solution'] = solutionString
-        variables['solutionClear'] = solutionClear
-
-        // Prepare Solution String 2
-        let solutionClearFunc = await db.getSolution(taskNr, 3, 'de')
-        solutionString = ''
-        for (let part of solutionClearFunc) {
-            solutionString += (part.loesung + ';')
-        }
-
-        for (element of solutionClearFunc) {
-            element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
-        }
-
-        variables['solutionFunc'] = solutionString
-        variables['solutionClearFunc'] = solutionClearFunc
-
-        // Prepare Solution String 3
-        let solutionClearPK = await db.getSolution(taskNr, 3, 'de')
-        solutionString = ''
-        for (let part of solutionClearPK) {
-            solutionString += (part.loesung + ';')
-        }
-
-        for (element of solutionClearPK) {
-            element.loesung = element.loesung.replace(new RegExp(';', 'g'), '; ')
-        }
-
-        variables['solutionPK'] = solutionString
-        variables['solutionClearPK'] = solutionClearPK
-
-        let completeSolution = [];
-
-        let funcDep = variables['solutionClearFunc'];
-
-        let pks = variables['solutionClearPK'];
-
-        for (let i = 0; i < funcDep.length; i++) {
-            let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ")
-            let count = 0;
-            for (let a = 0; a < possiblePKS.length; a++) {
-                for (let b = 0; b < pks.length; b++) {
-                    if (pks[b].loesung.localeCompare(possiblePKS[a]) === 0) {
-                        count = count + 1;
-                    }
-                }
-            }
-
-            if (count === pks.length) {
-                completeSolution[i] = funcDep[i].loesung + " → " + "voll"
-            } else if (count === 0) {
-                completeSolution[i] = funcDep[i].loesung + " → " + "transitiv"
-            } else {
-                completeSolution[i] = funcDep[i].loesung + " → " + "partiell"
-            }
-        }
-
-        variables['completeSolutionFuncType'] = completeSolution;
-    }
-    if (subtaskNr === 6) {
-        // Prepare Solution String 1
-        let solutionClear = await db.getSolution(taskNr, 6, 'de')
-        let solutionString = ''
-        for (let part of solutionClear) {
-            solutionString += (part.loesung + ';')
-        }
-
-        variables['solution'] = solutionString
-        variables['solutionClear'] = solutionClear
-
-        // Prepare Solution String 2
-        let solutionClearFunc = await db.getSolution(taskNr, 3, 'de')
-        solutionString = ''
-        for (let part of solutionClearFunc) {
-            solutionString += (part.loesung + ';')
-        }
-
-        for (element of solutionClearFunc) {
-            element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
-        }
-
-        variables['solutionFunc'] = solutionString
-        variables['solutionClearFunc'] = solutionClearFunc
-
-        // Prepare Solution String 3
-        let solutionClearPK = await db.getSolution(taskNr, 3, 'de')
-        solutionString = ''
-        for (let part of solutionClearPK) {
-            solutionString += (part.loesung + ';')
-        }
-
-        for (element of solutionClearPK) {
-            element.loesung = element.loesung.replace(new RegExp(';', 'g'), '; ')
-        }
-
-        variables['solutionPK'] = solutionString
-        variables['solutionClearPK'] = solutionClearPK
-
-        let completeSolution = [];
-
-        let funcDep = variables['solutionClearFunc'];
-
-        let pks = variables['solutionClearPK'];
-
-        for (let i = 0; i < funcDep.length; i++) {
-            let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ")
-            let count = 0;
-            for (let a = 0; a < possiblePKS.length; a++) {
-                for (let b = 0; b < pks.length; b++) {
-                    if (pks[b].loesung.localeCompare(possiblePKS[a]) === 0) {
-                        count = count + 1;
-                    }
-                }
-            }
-
-            if (count === pks.length) {
-                completeSolution[i] = funcDep[i].loesung + " → " + "voll"
-            } else if (count === 0) {
-                completeSolution[i] = funcDep[i].loesung + " → " + "transitiv"
-            } else {
-                completeSolution[i] = funcDep[i].loesung + " → " + "partiell"
-            }
-        }
-
-        variables['completeSolutionFuncType'] = completeSolution
+    for (element of solutionFuncDepClear) {
+        element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
     }
 
+    variables['solutionFuncDepClear'] = solutionFuncDepClear
 
     return variables
 }
 
+async function getCompleteSolution(taskNr) {
+    let variables = {}
+
+    // Inefficient db call but much more readable code
+    let solutionFuncDepClear = await db.getSolution(taskNr, 3, 'de')
+    for (element of solutionFuncDepClear) {
+        element.loesung = element.loesung.replace(new RegExp(':', 'g'), ': ').replace(new RegExp(',', 'g'), ', ')
+    }
+    variables['solutionFuncDepClear'] = solutionFuncDepClear
+
+    let solutionPKClear = await db.getSolution(taskNr, 4, 'de')
+    let solutionStringPK = ''
+    for (let part of solutionPKClear) {
+        solutionStringPK += (part.loesung + ';')
+    }
+
+    for (element of solutionPKClear) {
+        element.loesung = element.loesung.replace(new RegExp(';', 'g'), '; ')
+    }
+
+    variables['solutionPKString'] = solutionStringPK
+    variables['solutionPKClear'] = solutionPKClear
+
+    let completeSolution = [];
+    let funcDep = variables['solutionFuncDepClear'];
+    let pks = variables['solutionPKClear'];
+
+    for (let i = 0; i < funcDep.length; i++) {
+        let possiblePKS = funcDep[i].loesung.split(": ")[0].split(", ");
+        let count = 0;
+        for (let a = 0; a < possiblePKS.length; a++) {
+            for (let b = 0; b < pks.length; b++) {
+                if (pks[b].loesung.localeCompare(possiblePKS[a]) === 0) {
+                    count = count + 1;
+                }
+            }
+        }
+
+        if (count === pks.length) {
+            completeSolution[i] = funcDep[i].loesung + " → " + "voll";
+        } else if (count === 0) {
+            completeSolution[i] = funcDep[i].loesung + " → " + "transitiv";
+        } else {
+            completeSolution[i] = funcDep[i].loesung + " → " + "partiell";
+        }
+    }
+
+    variables['completeSolution'] = completeSolution;
+
+    return variables
+}
+
+async function getSolutionVariables(taskNr, subtaskNr) {
+    let solutionVariables = await getFirstSolution(taskNr, subtaskNr)
+
+    // Tasks 1-2 dont need functional dependencies or primary keys
+    if (subtaskNr < 3) return solutionVariables
+
+    let funcVariables = await getFuncSolution(taskNr)
+    solutionVariables = {...solutionVariables, ...funcVariables}
+
+    // Tasks 3-4 dont need primary keys
+    if (subtaskNr < 5) return solutionVariables
+
+    let completeSolutionVariables = await getCompleteSolution(taskNr)
+    solutionVariables = {...solutionVariables, ...completeSolutionVariables}
+
+    return solutionVariables
+}
+
 async function getPugVariables(taskNr, subtaskNr) {
-    // Variable Base
+    // Variables Base
     let variables = {title: 'NF-Trainer', active_apps: true}
     variables['task_nr'] = taskNr
 
@@ -349,13 +211,12 @@ app.post('/markViolatingColumnsTask', async (req, res) => {
     }
 
     // Skip Task since the table is already in 1NF
-    if (req.body.taskNr !== 2) {
+    if (req.session.taskNr !== 2) {
         res.redirect(307, '/findFuncDepenTask')
+    } else {
+        let variables = await getPugVariables(req.session.taskNr, currentSubtask)
+        res.render(path + 'markViolatingColumnsTask', variables)
     }
-
-    let variables = await getPugVariables(req.session.taskNr, currentSubtask)
-
-    res.render(path + 'markViolatingColumnsTask', variables)
 })
 
 app.post('/findFuncDepenTask', async (req, res) => {
@@ -391,7 +252,6 @@ app.post('/defFuncDepenTypeTask', async (req, res) => {
     }
 
     let variables = await getPugVariables(req.session.taskNr, currentSubtask)
-    // TODO subtask 5 doesnt require subtask information?
 
     res.render(path + 'defFuncDepenTypeTask', variables)
 })
