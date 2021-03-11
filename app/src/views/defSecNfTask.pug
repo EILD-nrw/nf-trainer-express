@@ -45,7 +45,7 @@ block content
                                 h5 Primärschlüssel:
                                 - var counter = 1
                                 div
-                                    each element in solutionClearPK
+                                    each element in solutionPKClear
                                         p #{counter + ". " + element.loesung}
                                         - counter = counter + 1
                             br
@@ -53,7 +53,7 @@ block content
                                 h5 Funktionale Abhängigkeiten:
                                 - var counter = 1
                                 div
-                                    each element in completeSolutionFuncType
+                                    each element in completeSolution
                                         p #{counter + ". " + element}
                                         - counter = counter + 1
                             center
