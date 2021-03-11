@@ -27,7 +27,7 @@ block content
                         h5 Primärschlüssel:
                         - var counter = 1
                         div
-                            each element in solutionClearPK
+                            each element in solutionPKClear
                                 p #{counter + ". " + element.loesung}
                                 - counter = counter + 1
                         div
@@ -38,7 +38,7 @@ block content
                                 br
 
                                 - var counter = 0
-                                each element in solutionClearFunc
+                                each element in solutionFuncDepClear
                                     //h5 #{element.loesung}
                                     .container
                                         .row
