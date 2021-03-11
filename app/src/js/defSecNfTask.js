@@ -370,7 +370,7 @@ $('#3nf_defSecNfTask').on('submit', function(e) {
         allUserSolutionArray.push(userSolutionString4);
     }
 
-    var allSolutionArray = $('#valueHolderSolution').attr('value').split('#');
+    var allSolutionArray = $('#valueHolderSolution').attr('value').split(';');
 
     var newAllSolutionArray = [];
 
