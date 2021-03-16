@@ -195,6 +195,9 @@ app.get(['/', '/index'], (req, res) => {
 app.post('/checkFirstNfTask', async (req, res) => {
     let currentSubtask = 1
 
+    // Save targetNF in Session
+    req.session.targetNF = req.body.targetNF
+
     // Choose random taskNr
     req.session.taskNr = getRandomInt(1, 8)
 
@@ -276,7 +279,14 @@ app.post('/defThiNfTask', async (req, res) => {
     }
 
     let variables = await getPugVariables(req.session.taskNr, currentSubtask)
-    variables['targetPage'] = '/checkBCNfTask'
+
+    // Continue to results if targetNF is 3nf
+    if (req.session.targetNF === 'bcnf') {
+        variables['targetPage'] = '/checkBCNfTask'
+    } else {
+        variables['targetPage'] = '/lastPage'
+    }
+
 
     res.render(path + 'defThiNfTask', variables)
 })
