@@ -281,6 +281,11 @@ app.post('/defThiNfTask', async (req, res) => {
     res.render(path + 'defThiNfTask', variables)
 })
 
+app.post('/checkBCNfTask', async (req, res) => {
+
+    res.render(path + 'checkBCNfTask')
+})
+
 app.post('/lastPage', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
 
