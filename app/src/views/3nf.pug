@@ -42,7 +42,13 @@ block content
                   action='/checkFirstNfTask'
                   )
 
-                    input(type='hidden' name='step' value='checkFirstNfTask')
+                    //input(type='hidden' name='step' value='checkFirstNfTask')
+                    input(type='radio' id='3nf' name='targetNF' value='3nf' checked)
+                    label(for='3nf') 3. Normalform
+
+                    input(type='radio' id='bcnf' name='targetNF' value='bcnf')
+                    label(for='bcnf') Boyce-Codd-Normalform
+
                     button(type='submit', class='btn btn-primary btn-lg') Test starten
 
                 br
