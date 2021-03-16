@@ -276,6 +276,7 @@ app.post('/defThiNfTask', async (req, res) => {
     }
 
     let variables = await getPugVariables(req.session.taskNr, currentSubtask)
+    variables['targetPage'] = '/checkBCNfTask'
 
     res.render(path + 'defThiNfTask', variables)
 })
