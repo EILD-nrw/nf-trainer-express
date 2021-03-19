@@ -287,13 +287,19 @@ app.post('/defThiNfTask', async (req, res) => {
         variables['targetPage'] = '/lastPage'
     }
 
-
     res.render(path + 'defThiNfTask', variables)
 })
 
 app.post('/checkBCNfTask', async (req, res) => {
+    let currentSubtask = 7
 
-    res.render(path + 'checkBCNfTask')
+    if (!req.session.taskNr) {
+        res.redirect('/')
+    }
+
+    let variables = await getPugVariables(req.session.taskNr, currentSubtask)
+
+    res.render(path + 'checkBCNfTask', variables)
 })
 
 app.post('/lastPage', async (req, res) => {
