@@ -442,6 +442,7 @@ Insert into UNTERAUFGABEN (ID,AUFGABENTEXT) values ('6','Bringen Sie das Schema 
 Insert into UNTERAUFGABEN (ID,AUFGABENTEXT) values ('3','Bestimmen Sie alle funktionalen Abhängigkeiten!');
 Insert into UNTERAUFGABEN (ID,AUFGABENTEXT) values ('4','Legen Sie einen eindeutigen Schlüssel fest!');
 Insert into UNTERAUFGABEN (ID,AUFGABENTEXT) values ('2','Markieren Sie die Spalten, die die erste Normalform verletzen!');
+Insert into UNTERAUFGABEN (ID,AUFGABENTEXT) values ('7','Befindet sich die Datenbank nun bereits in der Boyce-Codd Normalform?');
 
 CREATE TABLE UNTERAUFGABEN_EN (ID NUMERIC, AUFGABENTEXT VARCHAR);
 
@@ -451,3 +452,4 @@ Insert into UNTERAUFGABEN_EN (ID,AUFGABENTEXT) values ('6','Bringen Sie das Sche
 Insert into UNTERAUFGABEN_EN (ID,AUFGABENTEXT) values ('3','Bestimmen Sie alle funktionalen Abhängigkeiten!');
 Insert into UNTERAUFGABEN_EN (ID,AUFGABENTEXT) values ('4','Legen Sie einen eindeutigen Schlüssel fest!');
 Insert into UNTERAUFGABEN_EN (ID,AUFGABENTEXT) values ('2','Markieren Sie die Spalten, die die erste Normalform verletzen!');
+Insert into UNTERAUFGABEN_EN (ID,AUFGABENTEXT) values ('7','Befindet sich die Datenbank nun bereits in der Boyce-Codd Normalform?');
