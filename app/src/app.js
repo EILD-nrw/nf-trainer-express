@@ -55,7 +55,7 @@ async function getTaskTable(taskNr, subtaskNr) {
     return variables
 }
 
-async function getFirstSolution(taskNr, subtaskNr) {
+async function getTaskSolution(taskNr, subtaskNr) {
     let variables = {}
     let solutionClear = await db.getSolution(taskNr, subtaskNr, 'de')
     let solutionString = ''
@@ -140,7 +140,7 @@ async function getCompleteSolution(taskNr) {
 }
 
 async function getSolutionVariables(taskNr, subtaskNr) {
-    let solutionVariables = await getFirstSolution(taskNr, subtaskNr)
+    let solutionVariables = await getTaskSolution(taskNr, subtaskNr)
 
     // Tasks 1-2 dont need functional dependencies or primary keys
     if (subtaskNr < 3) return solutionVariables
