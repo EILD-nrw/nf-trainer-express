@@ -153,7 +153,7 @@ async function get3NFSolution(taskNr) {
 }
 
 async function getSolutionVariables(taskNr, subtaskNr) {
-    let solutionVariables = await getTaskSolution(taskNr, subtaskNr)
+    let solutionVariables = await getSubtaskSolution(taskNr, subtaskNr)
 
     // Tasks 1-2 dont need functional dependencies or primary keys
     if (subtaskNr < 3) return solutionVariables
