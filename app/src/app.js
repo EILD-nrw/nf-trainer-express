@@ -55,7 +55,7 @@ async function getTaskTable(taskNr, subtaskNr) {
     return variables
 }
 
-async function getTaskSolution(taskNr, subtaskNr) {
+async function getSubtaskSolution(taskNr, subtaskNr) {
     let variables = {}
     let solutionClear = await db.getSolution(taskNr, subtaskNr, 'de')
     let solutionString = ''
