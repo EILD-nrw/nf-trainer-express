@@ -167,6 +167,13 @@ async function getSolutionVariables(taskNr, subtaskNr) {
     let completeSolutionVariables = await getCompleteSolution(taskNr)
     solutionVariables = {...solutionVariables, ...completeSolutionVariables}
 
+    // Task 5-6 dont need duplicate 3nf results
+    if (subtaskNr < 7) return solutionVariables
+
+    // 3NF results for boyce-codd
+    let nfVariables = await get3NFSolution()
+    solutionVariables = {...solutionVariables, ...nfVariables}
+
     return solutionVariables
 }
 
