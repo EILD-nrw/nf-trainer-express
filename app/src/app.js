@@ -139,6 +139,19 @@ async function getCompleteSolution(taskNr) {
     return variables
 }
 
+async function get3NFSolution(taskNr) {
+    let variables = {}
+    let solutionClear = await db.getSolution(taskNr, 6, 'de')
+    let solutionString = ''
+    for (let part of solutionClear) {
+        solutionString += (part.loesung + ';')
+    }
+    variables['3NF'] = solutionString
+    variables['3NFClear'] = solutionClear
+
+    return variables
+}
+
 async function getSolutionVariables(taskNr, subtaskNr) {
     let solutionVariables = await getTaskSolution(taskNr, subtaskNr)
 
