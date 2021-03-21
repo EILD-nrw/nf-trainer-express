@@ -154,6 +154,12 @@ app.post('/checkBCNfTask', async (req, res) => {
 
     let variables = await pugHelper.getPugVariables(req.session.taskNr, currentSubtask)
 
+    if (variables['solutionClear'][0] === 0) {
+        variables['targetPage'] = '/defBCNfTask'
+    } else {
+        variables['targetPage'] = '/lastPage'
+    }
+
     res.render(path + 'checkBCNfTask', variables)
 })
 
