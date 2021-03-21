@@ -3,6 +3,7 @@ const { Pool } = require('pg')
 // Basic Pool Connection
 const pool = new Pool({
     user: 'postgres',
+    // TODO change localhost to db for docker networking
     host: 'localhost',
     database: 'nf_trainer',
     password: 'postgres',
@@ -44,7 +45,7 @@ async function getTaskTable(taskId, nf, language) {
     if (language !== 'de') {
         querystring += '_EN'
     }
-    let { rows } = await pool.query('SELECT * FROM AUFGABE' + querystring)
+    let { rows } = await pool.query(`SELECT * FROM AUFGABE${querystring}`)
     return rows
 }
 
