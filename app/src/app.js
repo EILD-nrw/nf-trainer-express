@@ -2,7 +2,11 @@ const express = require('express')
 const cookieSession = require('cookie-session')
 const bodyparser = require('body-parser')
 const app = express()
-const pugHelper = require('pugHelper')
+const pugHelper = require('./pugHelper')
+
+/*
+    Server Configuration
+ */
 
 let path = __dirname + '/views/'
 
