@@ -54,6 +54,7 @@ app.post('/checkFirstNfTask', async (req, res) => {
     req.session.targetNF = req.body.targetNF
 
     // Choose random taskNr
+    // TODO change maximum to variable
     req.session.taskNr = getRandomInt(1, 8)
 
     let variables = await pugHelper.getPugVariables(req.session.taskNr, currentSubtask)
