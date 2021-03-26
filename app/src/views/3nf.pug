@@ -2,19 +2,6 @@ extends layout
 
 block content
     div(class="main-wrapper" role="main")
-
-        // TODO REMOVE SKIP
-        form(
-        class=''
-        method='post'
-        action='/checkBCNfTask'
-        )
-            button(
-            type='submit'
-            class='btn btn-primary btn-lg'
-            ) Skip
-
-
         // TODO Format text
         div(class="container main-content-container")
             div.jumbotron
@@ -35,22 +22,12 @@ block content
                     li In Schritt 6 überführen Sie die 2NF-Tabellen in 3NF-Tabellen. Dieser Schritt besteht wie Schritt 5 aus Drag&Drop-Felder, in denen Sie die Spalten ziehen können.
 
                 br
+                hr(class='my-4')
                 center
                   form(
                   class=''
                   method='post'
                   action='/checkFirstNfTask'
                   )
-
-                    //input(type='hidden' name='step' value='checkFirstNfTask')
-                    input(type='radio' id='3nf' name='targetNF' value='3nf' checked)
-                    label(for='3nf') 3. Normalform
-
-                    input(type='radio' id='bcnf' name='targetNF' value='bcnf')
-                    label(for='bcnf') Boyce-Codd-Normalform
-
                     button(type='submit', class='btn btn-primary btn-lg') Test starten
 
-                br
-                hr(class='my-4')
-                p Hinweis: Fehler sollten ja eigentlich nicht vorkommen. Sind jedoch welche drin, benutzen Sie bitte das Feedback-Formular.
