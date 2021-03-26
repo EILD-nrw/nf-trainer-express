@@ -3,8 +3,7 @@ const { Pool } = require('pg')
 // Basic Pool Connection
 const pool = new Pool({
     user: 'postgres',
-    // TODO change localhost to db for docker networking
-    host: 'localhost',
+    host: 'db',
     database: 'nf_trainer',
     password: 'postgres',
     port: 5432,
