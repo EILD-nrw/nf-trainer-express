@@ -155,7 +155,6 @@ module.exports = {
     getSubtaskSolution,
     getFuncSolution,
     getCompleteSolution,
-    getThirdNFSolution,
     getSolutionVariables,
     getPugVariables
 }
