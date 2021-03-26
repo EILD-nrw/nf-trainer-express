@@ -136,32 +136,9 @@ app.post('/defThiNfTask', async (req, res) => {
 
     let variables = await pugHelper.getPugVariables(req.session.taskNr, currentSubtask)
 
-    // Continue to results if targetNF is 3nf
-    if (req.session.targetNF === 'bcnf') {
-        variables['targetPage'] = '/checkBCNfTask'
-    } else {
-        variables['targetPage'] = '/lastPage'
-    }
+    variables['targetPage'] = '/lastPage'
 
     res.render(path + 'defThiNfTask', variables)
-})
-
-app.post('/checkBCNfTask', async (req, res) => {
-    let currentSubtask = 7
-
-    if (!req.session.taskNr) {
-        res.redirect('/')
-    }
-
-    let variables = await pugHelper.getPugVariables(req.session.taskNr, currentSubtask)
-
-    if (variables['solutionClear'][0] === 0) {
-        variables['targetPage'] = '/defBCNfTask'
-    } else {
-        variables['targetPage'] = '/lastPage'
-    }
-
-    res.render(path + 'checkBCNfTask', variables)
 })
 
 app.post('/lastPage', async (req, res) => {
