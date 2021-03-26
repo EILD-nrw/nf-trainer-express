@@ -11,15 +11,15 @@ async function getTasks(taskNr, subtaskNr) {
 async function getTaskTable(taskNr, subtaskNr) {
     let variables = {}
 
-    let tasktable
+    let taskTable
     // Task 2 is not in 1NF and gets another table
     if (taskNr === 2 && subtaskNr >= 2) {
-        tasktable = await db.getTaskTable(taskNr, 1, 'de')
+        taskTable = await db.getTaskTable(taskNr, 1, 'de')
     } else {
-        tasktable = await db.getTaskTable(taskNr, 0, 'de')
+        taskTable = await db.getTaskTable(taskNr, 0, 'de')
     }
-    variables['tasktable'] = tasktable
-    variables['keys'] = Object.keys(tasktable[0])
+    variables['tasktable'] = taskTable
+    variables['keys'] = Object.keys(taskTable[0])
 
     return variables
 }
