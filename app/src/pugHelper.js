@@ -108,23 +108,6 @@ async function getCompleteSolution(taskNr) {
     return variables
 }
 
-async function getThirdNFSolution(taskNr) {
-    let variables = {}
-    let solutionClear = await db.getSolution(taskNr, 6, 'de')
-    let solutionString = ''
-    for (let part of solutionClear) {
-        solutionString += (part.loesung + ';')
-    }
-    for (element of solutionClear) {
-        element.loesung = element.loesung.replace(new RegExp(';', 'g'), '; ')
-    }
-
-    variables['thirdNF'] = solutionString
-    variables['thirdNFClear'] = solutionClear
-
-    return variables
-}
-
 async function getSolutionVariables(taskNr, subtaskNr) {
     let solutionVariables = await getSubtaskSolution(taskNr, subtaskNr)
 
@@ -139,13 +122,6 @@ async function getSolutionVariables(taskNr, subtaskNr) {
 
     let completeSolutionVariables = await getCompleteSolution(taskNr)
     solutionVariables = {...solutionVariables, ...completeSolutionVariables}
-
-    // Task 5-6 dont need duplicate 3nf results
-    if (subtaskNr < 7) return solutionVariables
-
-    // 3NF results for boyce-codd
-    let nfVariables = await getThirdNFSolution(taskNr)
-    solutionVariables = {...solutionVariables, ...nfVariables}
 
     return solutionVariables
 }
