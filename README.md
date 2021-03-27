@@ -1,5 +1,5 @@
 # NF-Trainer
-The NF-Trainer is a learning application for transforming database tables into certain normal forms. The application was originally build by the [Cologne University of Applied Sciences](https://www.th-koeln.de/) as part of the online learning platform [edb](https://edb2.gm.th-koeln.de/index) and is now maintained as part of the EILD.nrw project, which aims to unify and improve the quality and reusability of database lectures and resources. 
+The NF-Trainer is a learning application for transforming database tables into the first 3 normal forms. The application was originally build by the [Cologne University of Applied Sciences](https://www.th-koeln.de/) as part of the online learning platform [edb](https://edb2.gm.th-koeln.de/index) and is now maintained as part of the EILD.nrw project, which aims to unify and improve the quality and reusability of database lectures and resources. 
 
 This tool is currently a docker-based express server with an included postgres-database. It is written in JavaScript and uses Pug as its templating engine. 
 
