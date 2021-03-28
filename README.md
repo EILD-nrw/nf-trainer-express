@@ -16,8 +16,7 @@ A SCORM / LTI version is currently planned as well.
 
 - Download or clone the repo
 - (Optional) Configure the `docker-compose.yml`
-- Build the docker containers using `docker-compose build`
-- Start the containers using `docker-compose up`
+- Build and Start the containers using `docker-compose up`
 
 Note that the database will initialize itself using the `data.sql` file upon its first startup. Please wait until the initialization is complete before trying to access the server.
 
