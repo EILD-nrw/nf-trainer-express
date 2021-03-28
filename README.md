@@ -1,4 +1,4 @@
-![plot](app/src/img/Logo-mitSchrift-v2.png)
+![EILD.nrw](app/src/img/Logo-mitSchrift-v2.png)
 # NF-Trainer
 The NF-Trainer is a learning application for transforming database tables into the first 3 normal forms. The application was originally build by the [Cologne University of Applied Sciences](https://www.th-koeln.de/) as part of the online learning platform [edb](https://edb2.gm.th-koeln.de/index) and is now maintained as part of the EILD.nrw project, which aims to unify and improve the quality and reusability of database lectures and resources. 
 
