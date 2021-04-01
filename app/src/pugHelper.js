@@ -30,6 +30,34 @@ async function getTaskTable(taskNr, subtaskNr) {
     return variables
 }
 
+async function getSubTaskTables(taskNr, subtaskNr, nf) {
+    let subTaskTables = []
+
+    // Task 2 currently requires special handling
+    let taskTableNF = getTaskTableNF(taskNr, subtaskNr)
+    let subtaskWithTaskTableColumns
+
+    // 2NF columns are stored in subtask 5, 3NF in subtask 6
+    if (nf === 2) {
+        subtaskWithTaskTableColumns = 5
+    } else {
+        subtaskWithTaskTableColumns = 6
+    }
+
+    // Get solution-strings from the corresponding subtasks
+    let solutions = await getSubtaskSolution(taskNr, subtaskWithTaskTableColumns)
+
+    // Get subTaskTables for all solution-strings
+    for (let solution of solutions) {
+        let subTaskTable = await db.getSubTaskTable(taskNr, taskTableNF, solution, 'de')
+        subTaskTables.push(subTaskTable)
+    }
+
+    let variables = {}
+    variables['subTaskTables'] = subTaskTables
+    return variables
+}
+
 async function getSubtaskSolution(taskNr, subtaskNr) {
     let variables = {}
     let solutionClear = await db.getSolution(taskNr, subtaskNr, 'de')
@@ -117,6 +145,7 @@ async function getCompleteSolution(taskNr) {
 module.exports = {
     getTasks,
     getTaskTable,
+    getSubTaskTables,
     getSubtaskSolution,
     getFuncSolution,
     getCompleteSolution,
