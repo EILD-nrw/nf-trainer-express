@@ -57,7 +57,13 @@ app.post('/checkFirstNfTask', async (req, res) => {
     // TODO change maximum to variable
     req.session.taskNr = getRandomInt(1, 8)
 
-    let variables = await pugHelper.getPugVariables(req.session.taskNr, currentSubtask)
+    // Get necessary stuff from database
+    let baseVariables = {title: 'NF-Trainer', active_apps: true}
+    let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
+    let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
+
+    // Build pug-variables
+    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables}
 
     res.render(path + 'checkFirstNfTask', variables)
 })
