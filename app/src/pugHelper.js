@@ -8,16 +8,22 @@ async function getTasks(taskNr, subtaskNr) {
     return variables
 }
 
+function getTaskTableNF(taskNr, subtaskNr) {
+    // TODO Replace with database call once task editor is implemented
+    // Task 2 is not in 1NF and gets another table
+    if (taskNr === 2 && subtaskNr >= 2) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
 async function getTaskTable(taskNr, subtaskNr) {
     let variables = {}
 
-    let taskTable
-    // Task 2 is not in 1NF and gets another table
-    if (taskNr === 2 && subtaskNr >= 2) {
-        taskTable = await db.getTaskTable(taskNr, 1, 'de')
-    } else {
-        taskTable = await db.getTaskTable(taskNr, 0, 'de')
-    }
+    let taskTableNF = getTaskTableNF(taskNr, subtaskNr)
+    let taskTable = await db.getTaskTable(taskNr, taskTableNF, 'de')
+
     variables['tasktable'] = taskTable
     variables['keys'] = Object.keys(taskTable[0])
 
