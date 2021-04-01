@@ -108,53 +108,10 @@ async function getCompleteSolution(taskNr) {
     return variables
 }
 
-async function getSolutionVariables(taskNr, subtaskNr) {
-    let solutionVariables = await getSubtaskSolution(taskNr, subtaskNr)
-
-    // Tasks 1-2 dont need functional dependencies or primary keys
-    if (subtaskNr < 3) return solutionVariables
-
-    let funcVariables = await getFuncSolution(taskNr)
-    solutionVariables = {...solutionVariables, ...funcVariables}
-
-    // Tasks 3-4 dont need primary keys
-    if (subtaskNr < 5) return solutionVariables
-
-    let completeSolutionVariables = await getCompleteSolution(taskNr)
-    solutionVariables = {...solutionVariables, ...completeSolutionVariables}
-
-    return solutionVariables
-}
-
-async function getPugVariables(taskNr, subtaskNr) {
-    // Variables Base
-    let variables = {title: 'NF-Trainer', active_apps: true}
-    variables['task_nr'] = taskNr
-
-    // Add Tasks
-    let taskVariables = await getTasks(taskNr, subtaskNr)
-    variables = {...variables, ...taskVariables}
-
-    // Add TaskTable
-    let taskTableVariables = await getTaskTable(taskNr, subtaskNr)
-    variables = {...variables, ...taskTableVariables}
-
-    // The first task does not need an additional solution
-    if (subtaskNr < 2) return variables
-
-    // Add Solution
-    let solutionVariables = await getSolutionVariables(taskNr, subtaskNr)
-    variables = {...variables, ...solutionVariables}
-
-    return variables
-}
-
 module.exports = {
     getTasks,
     getTaskTable,
     getSubtaskSolution,
     getFuncSolution,
     getCompleteSolution,
-    getSolutionVariables,
-    getPugVariables
 }
