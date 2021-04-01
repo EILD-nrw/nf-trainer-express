@@ -69,6 +69,14 @@ async function getTaskTable(taskId, nf, language) {
     return rows
 }
 
+async function getSubTaskTable(taskId, nf, solution, language) {
+    let columns = solution.replace(':', ',')
+    let querystring = getTaskTableQuerystring(taskId, nf, language)
+
+    let { rows } = await pool.query(`SELECT DISTINCT ${columns} FROM AUFGABE${querystring}`)
+    return rows
+}
+
 /**
  * Get solution for the current subtask of a certain task in the specified language.
  * Note that each subtask may have a different solution format.
