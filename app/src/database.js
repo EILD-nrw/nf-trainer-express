@@ -100,5 +100,6 @@ module.exports = {
     getTask,
     getSubtask,
     getTaskTable,
+    getSubTaskTable,
     getSolution,
 }
