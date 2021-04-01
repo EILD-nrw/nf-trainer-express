@@ -160,7 +160,16 @@ app.post('/defSecNfTask', async (req, res) => {
         res.redirect('/')
     }
 
-    let variables = await pugHelper.getPugVariables(req.session.taskNr, currentSubtask)
+    // Get necessary stuff from database
+    let baseVariables = {title: 'NF-Trainer', active_apps: true}
+    let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
+    let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
+    let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
+    let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr, currentSubtask)
+
+    // Build pug-variables
+    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
 
     res.render(path + 'defSecNfTask', variables)
 })
