@@ -184,13 +184,13 @@ app.post('/defThiNfTask', async (req, res) => {
     // Get necessary stuff from database
     let baseVariables = {title: 'NF-Trainer', active_apps: true}
     let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
-    let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
+    let subTaskTableVariables = await pugHelper.getSubTaskTables(req.session.taskNr, currentSubtask, 2)
     let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
     let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
     let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr, currentSubtask)
 
     // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
+    let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
 
     variables['targetPage'] = '/lastPage'
 
