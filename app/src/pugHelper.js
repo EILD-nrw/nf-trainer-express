@@ -49,12 +49,22 @@ async function getSubTaskTables(taskNr, subtaskNr, nf) {
 
     // Get subTaskTables for all solution-strings
     for (let solution of solutions) {
-        let subTaskTable = await db.getSubTaskTable(taskNr, taskTableNF, solution, 'de')
+        let solutionValue = solution['loesung']
+        let subTaskTable = await db.getSubTaskTable(taskNr, taskTableNF, solutionValue, 'de')
         subTaskTables.push(subTaskTable)
+    }
+
+    // Get all unique keys for solution picker
+    let keys = new Set()
+    for (let table of subTaskTables) {
+        for (let key of Object.keys(table[0])) {
+            keys.add(key)
+        }
     }
 
     let variables = {}
     variables['subTaskTables'] = subTaskTables
+    variables['keys'] = Array.from(keys.values())
     return variables
 }
 
