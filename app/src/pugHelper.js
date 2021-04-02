@@ -45,7 +45,7 @@ async function getSubTaskTables(taskNr, subtaskNr, nf) {
     }
 
     // Get solution-strings from the corresponding subtasks
-    let solutions = await getSubtaskSolution(taskNr, subtaskWithTaskTableColumns)
+    let solutions =  await db.getSolution(taskNr, subtaskNr, 'de')
 
     // Get subTaskTables for all solution-strings
     for (let solution of solutions) {
