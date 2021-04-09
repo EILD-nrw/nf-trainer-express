@@ -6,64 +6,64 @@
     padding-right: 10px;
     font-size: 12px;
     height: 40px;
-  
+
     color: #fff;
     background-color: #d12b2b;
     border: solid 2px #fff;
-  
-    -webkit-transform: translate(0px, 0px);
-            transform: translate(0px, 0px);
-  
-    transition: background-color 0.3s;
-  }
 
-  .drag-drop.can-drop {
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+
+    transition: background-color 0.3s;
+}
+
+.drag-drop.can-drop {
     color: #000;
     background-color: #7be275;
-  }
+}
 
- 
+
 .dropzone.primary_key_dropzone {
-  background-color: #e8e8e8;
-  border: dashed 4px transparent;
-  border-radius: 4px;
-  height: 100px;
-  width: 100%;
-  transition: background-color 0.3s;
+    background-color: #e8e8e8;
+    border: dashed 4px transparent;
+    border-radius: 4px;
+    height: 100px;
+    width: 100%;
+    transition: background-color 0.3s;
 }
 
 .dropzone.column_dropzone {
-  background-color: #e8e8e8;
-  border: dashed 4px transparent;
-  border-radius: 4px;
-  height: 200px;
-  width: 100%;
-  transition: background-color 0.3s;
+    background-color: #e8e8e8;
+    border: dashed 4px transparent;
+    border-radius: 4px;
+    height: 200px;
+    width: 100%;
+    transition: background-color 0.3s;
 }
-  
+
 .drop-active {
-  border-color: #b1b1b1 !important;
+    border-color: #b1b1b1 !important;
 }
 
 .drop-target {
-  background-color: #d3d3d3 !important;
-  border-color: #b1b1b1 !important;
-  border-style: solid !important;
+    background-color: #d3d3d3 !important;
+    border-color: #b1b1b1 !important;
+    border-style: solid !important;
 }
 
-  .possibleSolution1, .possibleSolution2, .possibleSolution3, .possibleSolution4{
+.possibleSolution1, .possibleSolution2, .possibleSolution3, .possibleSolution4 {
     /* float: left; */
     /* width: 265px; */
     padding: 10px;
     /* margin-right: 20px; */
-  }
+}
 
-  .table th {
-    text-align: center;   
- }
+.table th {
+    text-align: center;
+}
 
- .sampleSolution {
-   min-height: 100px;
-   min-width: 400px;
-   padding: 10px;
- }
+.sampleSolution {
+    min-height: 100px;
+    min-width: 400px;
+    padding: 10px;
+}
