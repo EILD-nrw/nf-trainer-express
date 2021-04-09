@@ -35,17 +35,21 @@ block content
                         br
                         br
                         div
-                            .table-responsive
-                                table(class="table table-striped table-bordered")
-                                    tr
-                                        each element in keys
-                                            th #{element.charAt(0).toUpperCase() + element.slice(1)}
-                                    each element in tasktable
-                                        tr(class="trToHide")
-                                            each attribute in element
-                                                td !{attribute}
+                            .row.display-flex
+                                each table in subTaskTables
+                                    .col-lg-6.col-md-12.col-sm-12.col-xs-12
+                                        table(class="table table-striped table-bordered")
+                                            tr
+                                                each key in Object.keys(table[0])
+                                                    th #{key.charAt(0).toUpperCase() + key.slice(1)}
+                                            each row in table
+                                                tr(class="trToHide")
+                                                    each entry in row
+                                                        td !{entry}
+
+
                             div
-                                h5 Primärschlüssel:
+                                h4 Primärschlüssel:
                                 - var counter = 1
                                 div
                                     each element in solutionPKClear
@@ -53,7 +57,7 @@ block content
                                         - counter = counter + 1
                             br
                             div
-                                h5 Funktionale Abhängigkeiten:
+                                h4 Funktionale Abhängigkeiten:
                                 - var counter = 1
                                 div
                                     each element in solutionFuncDepClear
@@ -84,8 +88,8 @@ block content
                                 .row
                                     .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution1")
-                                            each element in keys
-                                                div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
+                                            each key in keys
+                                                div(class="draggable drag-drop" id="yes-drop") #{key.charAt(0).toUpperCase() + key.slice(1)}
                                             br
                                             br
                                             p Primärschlüssel:
@@ -95,8 +99,8 @@ block content
 
                                     .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution2")
-                                            each element in keys
-                                                div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
+                                            each key in keys
+                                                div(class="draggable drag-drop" id="yes-drop") #{key.charAt(0).toUpperCase() + key.slice(1)}
                                             br
                                             br
                                             p Primärschlüssel:
@@ -106,8 +110,8 @@ block content
 
                                     .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution3")
-                                            each element in keys
-                                                div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
+                                            each key in keys
+                                                div(class="draggable drag-drop" id="yes-drop") #{key.charAt(0).toUpperCase() + key.slice(1)}
                                             br
                                             br
                                             p Primärschlüssel:
@@ -117,8 +121,8 @@ block content
 
                                     .col-xs-12.col-sm-12.col-md-6.col-lg-3
                                         div(class="possibleSolution4")
-                                            each element in keys
-                                                div(class="draggable drag-drop" id="yes-drop") #{element.charAt(0).toUpperCase() + element.slice(1)}
+                                            each key in keys
+                                                div(class="draggable drag-drop" id="yes-drop") #{key.charAt(0).toUpperCase() + key.slice(1)}
                                             br
                                             br
                                             p Primärschlüssel:

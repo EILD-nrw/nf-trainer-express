@@ -8,19 +8,63 @@ async function getTasks(taskNr, subtaskNr) {
     return variables
 }
 
+function getTaskTableNF(taskNr, subtaskNr) {
+    // TODO Replace with database call once task editor is implemented
+    // Task 2 is not in 1NF and gets another table
+    if (taskNr === 2 && subtaskNr >= 2) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
 async function getTaskTable(taskNr, subtaskNr) {
     let variables = {}
 
-    let taskTable
-    // Task 2 is not in 1NF and gets another table
-    if (taskNr === 2 && subtaskNr >= 2) {
-        taskTable = await db.getTaskTable(taskNr, 1, 'de')
-    } else {
-        taskTable = await db.getTaskTable(taskNr, 0, 'de')
-    }
+    let taskTableNF = getTaskTableNF(taskNr, subtaskNr)
+    let taskTable = await db.getTaskTable(taskNr, taskTableNF, 'de')
+
     variables['tasktable'] = taskTable
     variables['keys'] = Object.keys(taskTable[0])
 
+    return variables
+}
+
+async function getSubTaskTables(taskNr, subtaskNr, nf) {
+    let subTaskTables = []
+
+    // Task 2 currently requires special handling
+    let taskTableNF = getTaskTableNF(taskNr, subtaskNr)
+    let subtaskWithTaskTableColumns
+
+    // 2NF columns are stored in subtask 5, 3NF in subtask 6
+    if (nf === 2) {
+        subtaskWithTaskTableColumns = 5
+    } else {
+        subtaskWithTaskTableColumns = 6
+    }
+
+    // Get solution-strings from the corresponding subtasks
+    let solutions =  await db.getSolution(taskNr, subtaskNr, 'de')
+
+    // Get subTaskTables for all solution-strings
+    for (let solution of solutions) {
+        let solutionValue = solution['loesung']
+        let subTaskTable = await db.getSubTaskTable(taskNr, taskTableNF, solutionValue, 'de')
+        subTaskTables.push(subTaskTable)
+    }
+
+    // Get all unique keys for solution picker
+    let keys = new Set()
+    for (let table of subTaskTables) {
+        for (let key of Object.keys(table[0])) {
+            keys.add(key)
+        }
+    }
+
+    let variables = {}
+    variables['subTaskTables'] = subTaskTables
+    variables['keys'] = Array.from(keys.values())
     return variables
 }
 
@@ -111,6 +155,7 @@ async function getCompleteSolution(taskNr) {
 module.exports = {
     getTasks,
     getTaskTable,
+    getSubTaskTables,
     getSubtaskSolution,
     getFuncSolution,
     getCompleteSolution,

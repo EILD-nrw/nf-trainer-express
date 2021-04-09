@@ -43,6 +43,17 @@ async function getSubtask(subtaskId, language) {
     }
 }
 
+function getTaskTableQuerystring(taskId, nf, language) {
+    let querystring = taskId.toString()
+    if (nf !== 0) {
+        querystring += '_1'
+    }
+    if (language !== 'de') {
+        querystring += '_EN'
+    }
+    return querystring
+}
+
 /**
  * Get the Table that the user has to transform through the normal forms
  *
@@ -52,14 +63,17 @@ async function getSubtask(subtaskId, language) {
  * @returns {Promise<*>} Returns the task table
  */
 async function getTaskTable(taskId, nf, language) {
-    let querystring = taskId.toString()
-    if (nf !== 0) {
-        querystring += '_1'
-    }
-    if (language !== 'de') {
-        querystring += '_EN'
-    }
+    let querystring = getTaskTableQuerystring(taskId, nf, language)
+
     let { rows } = await pool.query(`SELECT * FROM AUFGABE${querystring}`)
+    return rows
+}
+
+async function getSubTaskTable(taskId, nf, solution, language) {
+    let columns = solution.replace(':', ',')
+    let querystring = getTaskTableQuerystring(taskId, nf, language)
+
+    let { rows } = await pool.query(`SELECT DISTINCT ${columns} FROM AUFGABE${querystring}`)
     return rows
 }
 
@@ -86,5 +100,6 @@ module.exports = {
     getTask,
     getSubtask,
     getTaskTable,
+    getSubTaskTable,
     getSolution,
 }
