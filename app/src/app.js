@@ -35,6 +35,11 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+async function getRandomTask() {
+    let maxTask = await service.getTaskCount()
+    return getRandomInt(0, maxTask)
+}
+
 // Index Page
 app.get(['/', '/index'], (req, res) => {
     // Variables for pug rendering
@@ -54,8 +59,7 @@ app.post('/checkFirstNfTask', async (req, res) => {
     req.session.targetNF = req.body.targetNF
 
     // Choose random taskNr
-    // TODO change maximum to variable
-    req.session.taskNr = getRandomInt(1, 8)
+    req.session.taskNr = await getRandomTask()
 
     // Get necessary stuff from database
     let baseVariables = {title: 'NF-Trainer', active_apps: true}
