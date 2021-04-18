@@ -1,5 +1,9 @@
 const db = require('./database')
 
+async function getTaskCount() {
+    return await db.getTaskCount()
+}
+
 async function getTasks(taskNr, subtaskNr) {
     let variables = {}
     variables['task'] = await db.getTask(taskNr, 'de')
@@ -45,7 +49,7 @@ async function getSubTaskTables(taskNr, subtaskNr, nf) {
     }
 
     // Get solution-strings from the corresponding subtasks
-    let solutions =  await db.getSolution(taskNr, subtaskNr, 'de')
+    let solutions =  await db.getSolution(taskNr, subtaskWithTaskTableColumns, 'de')
 
     // Get subTaskTables for all solution-strings
     for (let solution of solutions) {
@@ -153,6 +157,7 @@ async function getCompleteSolution(taskNr) {
 }
 
 module.exports = {
+    getTaskCount,
     getTasks,
     getTaskTable,
     getSubTaskTables,

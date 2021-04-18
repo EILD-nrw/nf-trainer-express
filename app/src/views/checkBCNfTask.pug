@@ -1,0 +1,113 @@
+extends layout
+
+block append stylesheets
+    link(rel='stylesheet', type='text/css', href='/css/additional.css')
+
+
+block content
+    div(class="main-wrapper" role="main")
+        div(class="container main-content-container")
+            h1#app-title NF-Trainer
+            form(
+                id="nf_checkBCNfTask"
+                class=""
+                method="post"
+                action="/lastPage"
+            )
+                div(class="panel panel-default")
+                    div(class="panel-heading")
+                        div(class="panel-title") Aufgabe 7:
+                        br
+                        div(class="pull-left")
+                            h3(class="panel-title") Frage: !{subtask.aufgabentext}
+                        div(class="pull-right")
+                            h3(class="panel-title") Schema-Nummer: !{task_nr}
+                        .clearfix
+                    div(class="panel-body")
+                        h4 Hilfstext:
+                        p !{task.aufgabentext}
+                        br
+                        button(
+                            onclick="hideTable()"
+                            type="button"
+                            class="btn btn-warning"
+                            id="btnTabelleAusblenden"
+                        ) Tabelleninhalt ausblenden
+                        br
+                        br
+                        div
+                            div
+                                .row.display-flex
+                                    each table in subTaskTables
+                                        .col-lg-6.col-md-12.col-sm-12.col-xs-12
+                                            table(class="table table-striped table-bordered")
+                                                tr
+                                                    each key in Object.keys(table[0])
+                                                        th #{key.charAt(0).toUpperCase() + key.slice(1)}
+                                                each row in table
+                                                    tr(class="trToHide")
+                                                        each entry in row
+                                                            td !{entry}
+                            div
+                                h4 Primärschlüssel:
+                                - var counter = 1
+                                div
+                                    each element in solutionPKClear
+                                        p #{counter + ". " + element.loesung}
+                                        - counter = counter + 1
+                            br
+                            div
+                                h4 Funktionale Abhängigkeiten:
+                                - var counter = 1
+                                div
+                                    each element in solutionFuncDepClear
+                                        p #{counter + ". " + element.loesung}
+                                        - counter = counter + 1
+
+                            center
+                                br
+                                h1 Ihre Antwort:
+                                br
+                                button(
+                                    onclick="showSampleSolution()"
+                                    type="button"
+                                    class="btn btn-warning"
+                                    id="btnSolution"
+                                ) Lösung anzeigen
+                                br
+                                br
+                                div(class="sampleSolution")
+                                    div(class="alert alert-success" role="alert")
+                                        h4 Lösung:
+                                        div(class="alert alert-info" role="alert")
+                                            h5 Die Tabelle befindet sich in der entsprechenden Normalform: #{solution}
+                                            p 0 = Nein ; 1 = Ja
+                                div(
+                                    class="list-group btn-group-toggle"
+                                    data-toggle="buttons"
+                                    style="width:300px"
+                                )
+                                    label(class="btn list-group-item")
+                                        input(
+                                            type="radio"
+                                            name="bcnf"
+                                            value="1"
+                                        )
+                                        | Ja
+                                    label(class='btn list-group-item')
+                                        input(
+                                            type='radio'
+                                            name='bcnf'
+                                            value='0'
+                                        )
+                                        | Nein
+                                div(id="valueHolder" value="" + solution[0] + "")
+
+                                button(type="submit" class="btn btn-primary")
+                                    h5 Ergebnis auswerten
+
+
+block append foot_scripts
+    script(src='/js/main.js')
+    script(src='/js/checkBCNfTask.js')
+    script(src='/js/sampleSolution.js')

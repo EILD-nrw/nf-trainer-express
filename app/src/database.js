@@ -9,6 +9,12 @@ const pool = new Pool({
     port: 5432,
 })
 
+async function getTaskCount() {
+    let { rows } = await pool.query('SELECT COUNT(DISTINCT aufgabenid) FROM loesungen')
+    let temp = rows[0]['count']
+    return parseInt(temp)
+}
+
 /**
  * Get a certain task from the database
  *
@@ -97,6 +103,7 @@ async function getSolution(taskId, subtaskId, language) {
 }
 
 module.exports = {
+    getTaskCount,
     getTask,
     getSubtask,
     getTaskTable,
