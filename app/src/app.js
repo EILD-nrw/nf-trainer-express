@@ -150,9 +150,10 @@ app.post('/defFuncDepenTypeTask', async (req, res) => {
     let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
     let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
     let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
+    let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
+    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
 
     res.render(path + 'defFuncDepenTypeTask', variables)
 })
