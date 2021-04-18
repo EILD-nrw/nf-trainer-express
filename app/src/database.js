@@ -103,6 +103,7 @@ async function getSolution(taskId, subtaskId, language) {
 }
 
 module.exports = {
+    getTaskCount,
     getTask,
     getSubtask,
     getTaskTable,
