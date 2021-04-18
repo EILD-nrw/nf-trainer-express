@@ -197,6 +197,27 @@ app.post('/defThiNfTask', async (req, res) => {
     res.render(path + 'defThiNfTask', variables)
 })
 
+app.post('/checkBCNfTask', async (req, res) => {
+    let currentSubtask = 7
+
+    if (!req.session.taskNr) {
+        res.redirect('/')
+    }
+
+    // Get necessary stuff from database
+    let baseVariables = {title: 'NF-Trainer', active_apps: true}
+    let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
+    let subTaskTableVariables = await pugHelper.getSubTaskTables(req.session.taskNr, currentSubtask, 3)
+    let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr)
+    let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr)
+
+    // Build pug-variables
+    let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
+
+    res.render(path + 'checkBCNfTask', variables)
+})
+
 app.post('/lastPage', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
 
