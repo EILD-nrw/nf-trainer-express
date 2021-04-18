@@ -104,7 +104,7 @@ app.post('/findFuncDepenTask', async (req, res) => {
     let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
     let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
     let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr)
 
     // Build pug-variables
     let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
@@ -125,7 +125,7 @@ app.post('/defPkTask', async (req, res) => {
     let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
     let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
     let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr)
 
     // Build pug-variables
     let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
@@ -145,7 +145,7 @@ app.post('/defFuncDepenTypeTask', async (req, res) => {
     let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
     let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
     let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr)
 
     // Build pug-variables
     let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
@@ -165,8 +165,8 @@ app.post('/defSecNfTask', async (req, res) => {
     let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
     let taskTableVariables = await pugHelper.getTaskTable(req.session.taskNr, currentSubtask)
     let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
-    let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr)
+    let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
     let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
@@ -186,8 +186,8 @@ app.post('/defThiNfTask', async (req, res) => {
     let taskVariables = await pugHelper.getTasks(req.session.taskNr, currentSubtask)
     let subTaskTableVariables = await pugHelper.getSubTaskTables(req.session.taskNr, currentSubtask, 2)
     let solutionVariables = await pugHelper.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr, currentSubtask)
-    let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr, currentSubtask)
+    let funcDepVariables = await pugHelper.getFuncSolution(req.session.taskNr)
+    let pkSolutionVariables = await pugHelper.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
     let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
