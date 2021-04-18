@@ -196,7 +196,12 @@ app.post('/defThiNfTask', async (req, res) => {
     // Build pug-variables
     let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
 
-    variables['targetPage'] = '/lastPage'
+    // Continue to results if targetNF is 3nf
+    if (req.session.targetNF === 'bcnf') {
+        variables['targetPage'] = '/checkBCNfTask'
+    } else {
+        variables['targetPage'] = '/lastPage'
+    }
 
     res.render(path + 'defThiNfTask', variables)
 })
