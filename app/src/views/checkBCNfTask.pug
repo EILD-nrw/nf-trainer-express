@@ -3,6 +3,7 @@ extends layout
 block append stylesheets
     link(rel='stylesheet', type='text/css', href='/css/additional.css')
 
+
 block content
     div(class="main-wrapper" role="main")
         div(class="container main-content-container")
@@ -68,7 +69,7 @@ block content
                                 h1 Ihre Antwort:
                                 br
                                 button(
-                                    onclick="showSolution()"
+                                    onclick="showSampleSolution()"
                                     type="button"
                                     class="btn btn-warning"
                                     id="btnSolution"
@@ -96,11 +97,11 @@ block content
                                     label(class='btn list-group-item')
                                         input(
                                             type='radio'
-                                            name='firstNf'
+                                            name='bcnf'
                                             value='0'
                                         )
                                         | Nein
-                                div(id="valueHolder" value="" + solutionClear[0] + "")
+                                div(id="valueHolder" value="" + solution[0] + "")
 
                                 button(type="submit" class="btn btn-primary")
                                     h5 Ergebnis auswerten
@@ -108,5 +109,5 @@ block content
 
 block append foot_scripts
     script(src='/js/main.js')
-    script(src='/js/interact.js')
     script(src='/js/checkBCNfTask.js')
+    script(src='/js/sampleSolution.js')
