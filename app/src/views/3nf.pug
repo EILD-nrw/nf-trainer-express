@@ -1,5 +1,9 @@
 extends layout
 
+block append stylesheets
+    link(rel='stylesheet', type='text/css', href='/css/additional.css')
+
+
 block content
     div(class="main-wrapper" role="main")
         // TODO Format text
