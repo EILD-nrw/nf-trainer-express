@@ -52,186 +52,227 @@ app.get(['/', '/index'], (req, res) => {
 /*
     Start Trainer
  */
-app.post('/checkFirstNfTask', async (req, res) => {
-    let currentSubtask = 1
+app.post('/checkFirstNfTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 1
 
-    // Save targetNF in Session
-    req.session.targetNF = req.body.targetNF
+        // Save targetNF in Session
+        req.session.targetNF = req.body.targetNF
 
-    // Choose random taskNr
-    req.session.taskNr = await getRandomTask()
+        // Choose random taskNr
+        req.session.taskNr = await getRandomTask()
 
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
+        // Get necessary stuff from database
+        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+        let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
 
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables}
+        // Build pug-variables
+        let variables = {...baseVariables, ...taskVariables, ...taskTableVariables}
 
-    res.render(path + 'checkFirstNfTask', variables)
+        res.render(path + 'checkFirstNfTask', variables)
+    } catch (err) {
+        next(err)
+    }
 })
 
-app.post('/markViolatingColumnsTask', async (req, res) => {
-    let currentSubtask = 2
+app.post('/markViolatingColumnsTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 2
 
-    if (!req.session.taskNr) {
-        res.redirect('/')
+
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
+        // Skip Task since the table is already in 1NF
+        if (req.session.taskNr !== 2) {
+            res.redirect(307, '/findFuncDepenTask')
+        } else {
+            // Get necessary stuff from database
+            let baseVariables = {title: 'NF-Trainer', active_apps: true}
+            let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+            let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
+            let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+
+            // Build pug-variables
+            let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables}
+
+            res.render(path + 'markViolatingColumnsTask', variables)
+        }
+    } catch (err) {
+        next(err)
     }
+})
 
-    // Skip Task since the table is already in 1NF
-    if (req.session.taskNr !== 2) {
-        res.redirect(307, '/findFuncDepenTask')
-    } else {
+app.post('/findFuncDepenTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 3
+
+
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
         // Get necessary stuff from database
         let baseVariables = {title: 'NF-Trainer', active_apps: true}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+        let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
 
         // Build pug-variables
-        let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables}
+        let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
 
-        res.render(path + 'markViolatingColumnsTask', variables)
-    }
-})
-
-app.post('/findFuncDepenTask', async (req, res) => {
-    let currentSubtask = 3
-
-    if (!req.session.taskNr) {
-        res.redirect('/')
+        res.render(path + 'findFuncDepenTask', variables)
+    } catch (err) {
+        next(err)
     }
 
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
-    let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
-
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
-
-    res.render(path + 'findFuncDepenTask', variables)
 })
 
 
-app.post('/defPkTask', async (req, res) => {
-    let currentSubtask = 4
+app.post('/defPkTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 4
 
-    if (!req.session.taskNr) {
-        res.redirect('/')
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
+        // Get necessary stuff from database
+        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+        let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
+        let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+        let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
+
+        // Build pug-variables
+        let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
+
+        res.render(path + 'defPkTask', variables)
+    } catch (err) {
+        next(err)
     }
-
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
-    let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
-
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables}
-
-    res.render(path + 'defPkTask', variables)
 })
 
-app.post('/defFuncDepenTypeTask', async (req, res) => {
-    let currentSubtask = 5
+app.post('/defFuncDepenTypeTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 5
 
-    if (!req.session.taskNr) {
-        res.redirect('/')
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
+        // Get necessary stuff from database
+        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+        let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
+        let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+        let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
+        let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
+
+        // Build pug-variables
+        let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
+
+        res.render(path + 'defFuncDepenTypeTask', variables)
+    } catch (err) {
+        next(err)
     }
-
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
-    let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
-    let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
-
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
-
-    res.render(path + 'defFuncDepenTypeTask', variables)
 })
 
-app.post('/defSecNfTask', async (req, res) => {
-    let currentSubtask = 5
+app.post('/defSecNfTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 5
 
-    if (!req.session.taskNr) {
-        res.redirect('/')
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
+        // Get necessary stuff from database
+        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+        let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
+        let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+        let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
+        let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
+
+        // Build pug-variables
+        let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
+
+        res.render(path + 'defSecNfTask', variables)
+    } catch (err) {
+        next(err)
     }
-
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
-    let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
-    let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
-
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
-
-    res.render(path + 'defSecNfTask', variables)
 })
 
-app.post('/defThiNfTask', async (req, res) => {
-    let currentSubtask = 6
+app.post('/defThiNfTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 6
 
-    if (!req.session.taskNr) {
-        res.redirect('/')
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
+        // Get necessary stuff from database
+        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+        let subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 2)
+        let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+        let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
+        let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
+
+        // Build pug-variables
+        let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
+
+        // Continue to results if targetNF is 3nf
+        if (req.session.targetNF === 'bcnf') {
+            variables['targetPage'] = '/checkBCNfTask'
+        } else {
+            variables['targetPage'] = '/lastPage'
+        }
+
+        res.render(path + 'defThiNfTask', variables)
+    } catch (err) {
+        next(err)
     }
-
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 2)
-    let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
-    let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
-
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
-
-    // Continue to results if targetNF is 3nf
-    if (req.session.targetNF === 'bcnf') {
-        variables['targetPage'] = '/checkBCNfTask'
-    } else {
-        variables['targetPage'] = '/lastPage'
-    }
-
-    res.render(path + 'defThiNfTask', variables)
 })
 
-app.post('/checkBCNfTask', async (req, res) => {
-    let currentSubtask = 7
+app.post('/checkBCNfTask', async (req, res, next) => {
+    try {
+        let currentSubtask = 7
 
-    if (!req.session.taskNr) {
-        res.redirect('/')
+        if (!req.session.taskNr) {
+            res.redirect('/')
+        }
+
+        // Get necessary stuff from database
+        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
+        let subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 3)
+        let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
+        let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
+        let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
+
+        // Build pug-variables
+        let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
+
+        res.render(path + 'checkBCNfTask', variables)
+    } catch (err) {
+        next(err)
     }
-
-    // Get necessary stuff from database
-    let baseVariables = {title: 'NF-Trainer', active_apps: true}
-    let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
-    let subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 3)
-    let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
-    let funcDepVariables = await service.getFuncSolution(req.session.taskNr)
-    let pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
-
-    // Build pug-variables
-    let variables = {...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables}
-
-    res.render(path + 'checkBCNfTask', variables)
 })
 
 app.post('/lastPage', async (req, res) => {
     let variables = {title: 'NF-Trainer', active_apps: true}
 
     res.render(path + 'lastPage', variables)
+})
+
+// Simple error handling
+app.use((err, req, res, next) => {
+    console.error(err)
+    res.render(path + '500', {error: err})
 })
 
 // Start server
