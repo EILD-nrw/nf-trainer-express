@@ -63,7 +63,7 @@ app.post('/checkFirstNfTask', async (req, res, next) => {
         req.session.taskNr = await getRandomTask()
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
 
@@ -90,7 +90,7 @@ app.post('/markViolatingColumnsTask', async (req, res, next) => {
             res.redirect(307, '/findFuncDepenTask')
         } else {
             // Get necessary stuff from database
-            let baseVariables = {title: 'NF-Trainer', active_apps: true}
+            let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
             let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
             let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
             let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -115,7 +115,7 @@ app.post('/findFuncDepenTask', async (req, res, next) => {
         }
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -141,7 +141,7 @@ app.post('/defPkTask', async (req, res, next) => {
         }
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -165,7 +165,7 @@ app.post('/defFuncDepenTypeTask', async (req, res, next) => {
         }
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -190,7 +190,7 @@ app.post('/defSecNfTask', async (req, res, next) => {
         }
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -215,7 +215,7 @@ app.post('/defThiNfTask', async (req, res, next) => {
         }
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 2)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -247,7 +247,7 @@ app.post('/checkBCNfTask', async (req, res, next) => {
         }
 
         // Get necessary stuff from database
-        let baseVariables = {title: 'NF-Trainer', active_apps: true}
+        let baseVariables = {title: 'NF-Trainer', active_apps: true, task_nr: req.session.taskNr}
         let taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
         let subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 3)
         let solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
