@@ -15,7 +15,7 @@ async function getTasks(taskNr, subtaskNr) {
 function getTaskTableNF(taskNr, subtaskNr) {
     // TODO Replace with database call once task editor is implemented
     // Task 2 is not in 1NF and gets another table
-    if (taskNr === 2 && subtaskNr >= 2) {
+    if (taskNr === 2 && subtaskNr > 2) {
         return 1
     } else {
         return 0
