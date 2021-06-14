@@ -37,7 +37,7 @@ function getRandomInt(min, max) {
 
 async function getRandomTask() {
     let maxTask = await service.getTaskCount()
-    return getRandomInt(0, maxTask)
+    return getRandomInt(1, maxTask)
 }
 
 // Index Page
