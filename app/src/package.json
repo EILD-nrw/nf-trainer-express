@@ -16,5 +16,10 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
+  },
+  "standard": {
+    "ignore": [
+      "src/js"
+    ]
   }
 }
