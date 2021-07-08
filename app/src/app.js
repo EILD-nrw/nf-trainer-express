@@ -268,7 +268,7 @@ app.post('/lastPage', async (req, res) => {
 
 // Simple error handling
 app.use((err, req, res, next) => {
-  console.error(err)
+  console.error(err.stack)
   res.render(path.join(viewPath, '500'), { error: err })
 })
 
