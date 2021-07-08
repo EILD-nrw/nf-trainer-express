@@ -2,17 +2,17 @@ const { Pool } = require('pg')
 
 // Basic Pool Connection
 const pool = new Pool({
-    user: 'postgres',
-    host: 'db',
-    database: 'nf_trainer',
-    password: 'postgres',
-    port: 5432,
+  user: 'postgres',
+  host: 'db',
+  database: 'nf_trainer',
+  password: 'postgres',
+  port: 5432
 })
 
-async function getTaskCount() {
-    let { rows } = await pool.query('SELECT COUNT(DISTINCT aufgabenid) FROM loesungen')
-    let temp = rows[0]['count']
-    return parseInt(temp)
+async function getTaskCount () {
+  const { rows } = await pool.query('SELECT COUNT(DISTINCT aufgabenid) FROM loesungen')
+  const temp = rows[0].count
+  return parseInt(temp)
 }
 
 /**
@@ -22,14 +22,14 @@ async function getTaskCount() {
  * @param language Language of the task ('de' for german, everything else returns english)
  * @returns {Promise<*>} Returns 'Aufgabentext' and 'NF' from the Database
  */
-async function getTask(taskId, language) {
-        if (language === 'de') {
-            let { rows } = await pool.query('SELECT AUFGABENTEXT, NF FROM AUFGABEN WHERE ID = $1', [taskId])
-            return rows[0]
-        } else {
-            let { rows } = await pool.query('SELECT AUFGABENTEXT, NF FROM AUFGABEN_EN WHERE ID = $1', [taskId])
-            return rows[0]
-        }
+async function getTask (taskId, language) {
+  if (language === 'de') {
+    const { rows } = await pool.query('SELECT AUFGABENTEXT, NF FROM AUFGABEN WHERE ID = $1', [taskId])
+    return rows[0]
+  } else {
+    const { rows } = await pool.query('SELECT AUFGABENTEXT, NF FROM AUFGABEN_EN WHERE ID = $1', [taskId])
+    return rows[0]
+  }
 }
 
 /**
@@ -39,25 +39,25 @@ async function getTask(taskId, language) {
  * @param language Language of the current user
  * @returns {Promise<*>} Returns 'Aufgabentext' from the Database
  */
-async function getSubtask(subtaskId, language) {
-    if (language === 'de') {
-        let { rows } = await pool.query('SELECT AUFGABENTEXT FROM UNTERAUFGABEN WHERE ID = $1', [subtaskId])
-        return rows[0]
-    } else {
-        let { rows } = await pool.query('SELECT AUFGABENTEXT FROM UNTERAUFGABEN_EN WHERE ID = $1', [subtaskId])
-        return rows[0]
-    }
+async function getSubtask (subtaskId, language) {
+  if (language === 'de') {
+    const { rows } = await pool.query('SELECT AUFGABENTEXT FROM UNTERAUFGABEN WHERE ID = $1', [subtaskId])
+    return rows[0]
+  } else {
+    const { rows } = await pool.query('SELECT AUFGABENTEXT FROM UNTERAUFGABEN_EN WHERE ID = $1', [subtaskId])
+    return rows[0]
+  }
 }
 
-function getTaskTableQuerystring(taskId, nf, language) {
-    let querystring = taskId.toString()
-    if (nf !== 0) {
-        querystring += '_1'
-    }
-    if (language !== 'de') {
-        querystring += '_EN'
-    }
-    return querystring
+function getTaskTableQuerystring (taskId, nf, language) {
+  let querystring = taskId.toString()
+  if (nf !== 0) {
+    querystring += '_1'
+  }
+  if (language !== 'de') {
+    querystring += '_EN'
+  }
+  return querystring
 }
 
 /**
@@ -68,19 +68,19 @@ function getTaskTableQuerystring(taskId, nf, language) {
  * @param language Language of the current user
  * @returns {Promise<*>} Returns the task table
  */
-async function getTaskTable(taskId, nf, language) {
-    let querystring = getTaskTableQuerystring(taskId, nf, language)
+async function getTaskTable (taskId, nf, language) {
+  const querystring = getTaskTableQuerystring(taskId, nf, language)
 
-    let { rows } = await pool.query(`SELECT * FROM AUFGABE${querystring}`)
-    return rows
+  const { rows } = await pool.query(`SELECT * FROM AUFGABE${querystring}`)
+  return rows
 }
 
-async function getSubTaskTable(taskId, nf, solution, language) {
-    let columns = solution.replace(':', ',')
-    let querystring = getTaskTableQuerystring(taskId, nf, language)
+async function getSubTaskTable (taskId, nf, solution, language) {
+  const columns = solution.replace(':', ',')
+  const querystring = getTaskTableQuerystring(taskId, nf, language)
 
-    let { rows } = await pool.query(`SELECT DISTINCT ${columns} FROM AUFGABE${querystring}`)
-    return rows
+  const { rows } = await pool.query(`SELECT DISTINCT ${columns} FROM AUFGABE${querystring}`)
+  return rows
 }
 
 /**
@@ -92,21 +92,21 @@ async function getSubTaskTable(taskId, nf, solution, language) {
  * @param language Language of the current user
  * @returns {Promise<*>} Returns list of solution data
  */
-async function getSolution(taskId, subtaskId, language) {
-    if (language === 'de') {
-        let { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
-        return rows
-    } else {
-        let { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN_EN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
-        return rows
-    }
+async function getSolution (taskId, subtaskId, language) {
+  if (language === 'de') {
+    const { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
+    return rows
+  } else {
+    const { rows } = await pool.query('SELECT LOESUNG FROM LOESUNGEN_EN WHERE AUFGABENID = $1 AND UNTERAUFGABENID = $2', [taskId, subtaskId])
+    return rows
+  }
 }
 
 module.exports = {
-    getTaskCount,
-    getTask,
-    getSubtask,
-    getTaskTable,
-    getSubTaskTable,
-    getSolution,
+  getTaskCount,
+  getTask,
+  getSubtask,
+  getTaskTable,
+  getSubTaskTable,
+  getSolution
 }
