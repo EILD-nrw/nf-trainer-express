@@ -43,11 +43,8 @@ async function getRandomTask () {
 
 // Index Page
 app.get(['/', '/index'], (req, res) => {
-  // Variables for pug rendering
-  const variables = { title: 'NF-Trainer' }
-
   // Render pug file at /views/3nf
-  res.render(path.join(viewPath, '3nf'), variables)
+  res.render(path.join(viewPath, '3nf'), {})
 })
 
 /*
@@ -64,12 +61,11 @@ app.post('/checkFirstNfTask', async (req, res, next) => {
     req.session.taskNr = await getRandomTask()
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...taskTableVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...taskTableVariables }
 
     res.render(path.join(viewPath, 'checkFirstNfTask'), variables)
   } catch (err) {
@@ -90,13 +86,12 @@ app.post('/markViolatingColumnsTask', async (req, res, next) => {
       res.redirect(307, '/findFuncDepenTask')
     } else {
       // Get necessary stuff from database
-      const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
       const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
       const taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
       const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
 
       // Build pug-variables
-      const variables = { ...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables }
+      const variables = { task_nr: req.session.taskNr, ...taskVariables, ...taskTableVariables, ...solutionVariables }
 
       res.render(path.join(viewPath, 'markViolatingColumnsTask'), variables)
     }
@@ -114,14 +109,13 @@ app.post('/findFuncDepenTask', async (req, res, next) => {
     }
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
     const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
     const funcDepVariables = await service.getFuncSolution(req.session.taskNr)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables }
 
     res.render(path.join(viewPath, 'findFuncDepenTask'), variables)
   } catch (err) {
@@ -138,14 +132,13 @@ app.post('/defPkTask', async (req, res, next) => {
     }
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
     const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
     const funcDepVariables = await service.getFuncSolution(req.session.taskNr)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables }
 
     res.render(path.join(viewPath, 'defPkTask'), variables)
   } catch (err) {
@@ -162,7 +155,6 @@ app.post('/defFuncDepenTypeTask', async (req, res, next) => {
     }
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
     const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -170,7 +162,7 @@ app.post('/defFuncDepenTypeTask', async (req, res, next) => {
     const pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
 
     res.render(path.join(viewPath, 'defFuncDepenTypeTask'), variables)
   } catch (err) {
@@ -187,7 +179,6 @@ app.post('/defSecNfTask', async (req, res, next) => {
     }
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const taskTableVariables = await service.getTaskTable(req.session.taskNr, currentSubtask)
     const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -195,7 +186,7 @@ app.post('/defSecNfTask', async (req, res, next) => {
     const pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...taskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
 
     res.render(path.join(viewPath, 'defSecNfTask'), variables)
   } catch (err) {
@@ -212,7 +203,6 @@ app.post('/defThiNfTask', async (req, res, next) => {
     }
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 2)
     const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -220,7 +210,7 @@ app.post('/defThiNfTask', async (req, res, next) => {
     const pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
 
     // Continue to results if targetNF is 3nf
     if (req.session.targetNF === 'bcnf') {
@@ -244,7 +234,6 @@ app.post('/checkBCNfTask', async (req, res, next) => {
     }
 
     // Get necessary stuff from database
-    const baseVariables = { title: 'NF-Trainer', task_nr: req.session.taskNr }
     const taskVariables = await service.getTasks(req.session.taskNr, currentSubtask)
     const subTaskTableVariables = await service.getSubTaskTables(req.session.taskNr, currentSubtask, 3)
     const solutionVariables = await service.getSubtaskSolution(req.session.taskNr, currentSubtask)
@@ -252,7 +241,7 @@ app.post('/checkBCNfTask', async (req, res, next) => {
     const pkSolutionVariables = await service.getCompleteSolution(req.session.taskNr)
 
     // Build pug-variables
-    const variables = { ...baseVariables, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
+    const variables = { task_nr: req.session.taskNr, ...taskVariables, ...subTaskTableVariables, ...solutionVariables, ...funcDepVariables, ...pkSolutionVariables }
 
     res.render(path.join(viewPath, 'checkBCNfTask'), variables)
   } catch (err) {
@@ -261,9 +250,7 @@ app.post('/checkBCNfTask', async (req, res, next) => {
 })
 
 app.post('/lastPage', async (req, res) => {
-  const variables = { title: 'NF-Trainer' }
-
-  res.render(path.join(viewPath, 'lastPage'), variables)
+  res.render(path.join(viewPath, 'lastPage'), {})
 })
 
 // Simple error handling
